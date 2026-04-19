@@ -97,7 +97,27 @@ function renderTheory() {
     content.className = 'theory-card-content';
     // Replace newlines with <br> and bold specific terms
     let textHTML = item.content.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
-    content.innerHTML = `<p>${textHTML}</p>`;
+    
+    let tableHTML = '';
+    if (item.table) {
+      tableHTML = '<div class="table-container"><table class="theory-table">';
+      tableHTML += '<thead><tr>';
+      item.table.headers.forEach(th => {
+        tableHTML += `<th>${th}</th>`;
+      });
+      tableHTML += '</tr></thead><tbody>';
+      
+      item.table.rows.forEach(tr => {
+        tableHTML += '<tr>';
+        tr.forEach(td => {
+          tableHTML += `<td>${td}</td>`;
+        });
+        tableHTML += '</tr>';
+      });
+      tableHTML += '</tbody></table></div>';
+    }
+    
+    content.innerHTML = `<p>${textHTML}</p>${tableHTML}`;
     
     header.onclick = () => {
       // Toggle active class

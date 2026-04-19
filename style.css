@@ -436,3 +436,41 @@ header h1 {
     font-size: 1rem;
   }
 }
+
+/* Theory Table */
+.table-container {
+  overflow-x: auto;
+  margin-top: 15px;
+  background: var(--surface);
+  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+}
+
+.theory-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.theory-table th, .theory-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.theory-table th {
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--gold);
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.theory-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.theory-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
