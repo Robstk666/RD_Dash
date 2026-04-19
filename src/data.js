@@ -54,7 +54,7 @@ export const trainingSchedule = [
         time: "06:00 (Утро)",
         location: "Улица",
         category: "Low-CNS: Биомеханика",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 Днем или после вечернего зала: Протеин (1 порция).",
         exercises: [
           {
             name: "1. Penultimate Jab Drill",
@@ -74,7 +74,7 @@ export const trainingSchedule = [
         time: "19:00 (Вечер)",
         location: "Зал",
         category: "High-CNS: Абсолютная сила",
-        supplements: "🎯 За 45 мин до тренировки: 15г Желатина + 50мг Вит С.",
+        supplements: "🎯 За 45-60 мин до зала: 15г Желатина + 50мг Вит С. ⚡ За 30-40 мин: Цитруллин (1 ложка).",
         exercises: [
           {
             name: "1. Overcoming Isometric Squat",
@@ -106,7 +106,7 @@ export const trainingSchedule = [
         time: "06:00 (Утро)",
         location: "Улица",
         category: "High-CNS: РЕАЛИЗАЦИЯ DPE",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 В течение дня: Протеин (1 порция).",
         exercises: [
           {
             name: "1. Разминка + Pogo Jumps",
@@ -146,7 +146,7 @@ export const trainingSchedule = [
         time: "06:00 (Утро)",
         location: "-",
         category: "Регенерация",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 Днем или после вечернего зала: Протеин (1 порция).",
         exercises: [
           {
             name: "Сон / Отдых",
@@ -160,7 +160,7 @@ export const trainingSchedule = [
         time: "19:00 (Вечер)",
         location: "Зал",
         category: "Low-CNS: Гипертрофия",
-        supplements: "🎯 За 45 мин до тренировки: 15г Желатина + 50мг Вит С.",
+        supplements: "🎯 За 45-60 мин до зала: 15г Желатина + 50мг Вит С.",
         exercises: [
           {
             name: "1. Румынская тяга (RDL)",
@@ -192,7 +192,7 @@ export const trainingSchedule = [
         time: "06:00 (Утро)",
         location: "Улица",
         category: "Low-CNS: Реактивность",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 Днем или после вечернего зала: Протеин (1 порция).",
         exercises: [
           {
             name: "1. Экстенсивные Pogo Jumps",
@@ -212,7 +212,7 @@ export const trainingSchedule = [
         time: "19:00 (Вечер)",
         location: "Зал",
         category: "High-CNS: Праймер ЦНС",
-        supplements: "🎯 За 45 мин до тренировки: 15г Желатина + 50мг Вит С.",
+        supplements: "🎯 За 45-60 мин до зала: 15г Желатина + 50мг Вит С. ⚡ За 30-40 мин: Цитруллин (1 ложка).",
         exercises: [
           {
             name: "1. Тяжелый полуприсед (Half Squat)",
@@ -238,7 +238,7 @@ export const trainingSchedule = [
         time: "06:00 (Утро)",
         location: "Улица",
         category: "High-CNS: РЕАЛИЗАЦИЯ DPE",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 В течение дня: Протеин (1 порция).",
         exercises: [
           {
             name: "1. Спринты на акселерацию",
@@ -278,7 +278,7 @@ export const trainingSchedule = [
         time: "Весь день",
         location: "-",
         category: "Регенерация",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🥤 В течение дня: Протеин (1 порция).",
         exercises: [
           {
             name: "Полный отдых",
@@ -298,7 +298,7 @@ export const trainingSchedule = [
         time: "13:00 (Днем)",
         location: "Зал или Улица",
         category: "High-CNS: ФКМ",
-        supplements: "",
+        supplements: "💊 В любое время: Креатин (1 ложка). 🎯 За 45-60 мин до старта: 15г Желатина + 50мг Вит С. ⚡ За 30-40 мин: Цитруллин (1 ложка). 🥤 После: Протеин (1 порц).",
         exercises: [
           {
             name: "Французский Контраст: Инструкция",
