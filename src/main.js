@@ -1,4 +1,4 @@
-import { theoryData, trainingSchedule } from './data.js';
+import { theoryData, trainingSchedule, filmingData } from './data.js';
 
 const app = document.getElementById('app');
 
@@ -16,6 +16,8 @@ function render() {
     renderTheory();
   } else if (currentState === 'training') {
     renderTraining();
+  } else if (currentState === 'filming') {
+    renderFilming();
   }
 }
 
@@ -71,9 +73,51 @@ function renderMenu() {
   trainingBtn.innerHTML = `<i>⚡</i> ПРОГРАММА ТРЕНИРОВОК`;
   trainingBtn.onclick = () => { currentState = 'training'; render(); };
   
+  const filmingBtn = document.createElement('button');
+  filmingBtn.className = 'menu-btn';
+  filmingBtn.innerHTML = `<i>🎥</i> СЪЕМКИ`;
+  filmingBtn.onclick = () => { currentState = 'filming'; render(); };
+  
   menuContainer.appendChild(theoryBtn);
   menuContainer.appendChild(trainingBtn);
+  menuContainer.appendChild(filmingBtn);
   app.appendChild(menuContainer);
+}
+
+function renderFilming() {
+  renderHeader('МАТЕРИАЛЫ И ОТЧЕТЫ', () => { currentState = 'menu'; render(); });
+  
+  const list = document.createElement('div');
+  list.className = 'theory-list';
+  
+  filmingData.forEach((item, index) => {
+    const card = document.createElement('div');
+    card.className = 'theory-card';
+    
+    const header = document.createElement('div');
+    header.className = 'theory-card-header';
+    header.innerHTML = `
+      <h3>${item.title}</h3>
+      <div class="theory-card-icon">▼</div>
+    `;
+    
+    const content = document.createElement('div');
+    content.className = 'theory-card-content';
+    let textHTML = item.content.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+    content.innerHTML = `<p>${textHTML}</p>`;
+    
+    header.onclick = () => {
+      const isActive = card.classList.contains('active');
+      document.querySelectorAll('.theory-card').forEach(c => c.classList.remove('active'));
+      if (!isActive) card.classList.add('active');
+    };
+    
+    card.appendChild(header);
+    card.appendChild(content);
+    list.appendChild(card);
+  });
+  
+  app.appendChild(list);
 }
 
 function renderTheory() {
