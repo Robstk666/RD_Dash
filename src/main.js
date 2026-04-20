@@ -1,4 +1,4 @@
-import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData } from './data.js';
+import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData } from './data.js';
 
 // LocalStorage Utils for Trash functionality
 function getDeletedItems() {
@@ -38,6 +38,8 @@ function render() {
     renderTraining(outdoorTrainingSchedule, 'ТРЕНИРОВКИ БЕЗ ЗАЛА');
   } else if (currentState === 'workouts_menu') {
     renderWorkoutsMenu();
+  } else if (currentState === 'pkt') {
+    renderTextCards('ПКТ (ПОСЛЕКУРСОВАЯ ТЕРАПИЯ)', pktData, 'workouts_menu');
   } else if (currentState === 'filming') {
     renderFilming();
   } else if (currentState === 'offer') {
@@ -137,9 +139,15 @@ function renderWorkoutsMenu() {
   outdoorBtn.innerHTML = `<i>🌲</i> ТРЕНИРОВКИ БЕЗ ЗАЛА`;
   outdoorBtn.onclick = () => { currentState = 'outdoor_training'; render(); };
   
+  const pktBtn = document.createElement('button');
+  pktBtn.className = 'menu-btn';
+  pktBtn.innerHTML = `<i>💊</i> ПКТ`;
+  pktBtn.onclick = () => { currentState = 'pkt'; render(); };
+  
   menuContainer.appendChild(theoryBtn);
   menuContainer.appendChild(trainingBtn);
   menuContainer.appendChild(outdoorBtn);
+  menuContainer.appendChild(pktBtn);
   app.appendChild(menuContainer);
 }
 
@@ -324,12 +332,16 @@ function renderFilming() {
 }
 
 function renderTheory() {
-  renderHeader('БИОМЕХАНИКА И ЦНС', () => { currentState = 'workouts_menu'; render(); });
+  renderTextCards('БИОМЕХАНИКА И ЦНС', theoryData, 'workouts_menu');
+}
+
+function renderTextCards(headerTitle, textData, backRoute) {
+  renderHeader(headerTitle, () => { currentState = backRoute; render(); });
   
   const list = document.createElement('div');
   list.className = 'theory-list';
   
-  theoryData.forEach((item, index) => {
+  textData.forEach((item, index) => {
     const card = document.createElement('div');
     card.className = 'theory-card';
     
