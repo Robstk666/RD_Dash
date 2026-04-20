@@ -474,3 +474,58 @@ header h1 {
 .theory-table tbody tr:hover {
   background: rgba(255, 255, 255, 0.05);
 }
+
+/* Offer Project & Actions */
+.copy-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-bright);
+  padding: 15px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  text-align: left;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.copy-btn i {
+  margin-right: 15px;
+  font-size: 1.2rem;
+}
+
+.copy-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--text-muted);
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: var(--crimson);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s transform;
+}
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.restore-btn {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.restore-btn:hover {
+  background: var(--gold);
+  color: var(--bg-color);
+}
