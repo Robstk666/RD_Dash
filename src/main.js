@@ -19,6 +19,15 @@ function restoreItem(id) {
 }
 
 const app = document.getElementById('app');
+const cursorGlow = document.getElementById('cursor-glow');
+
+// Cursor glow tracking
+document.addEventListener('mousemove', (e) => {
+  if (cursorGlow) {
+    cursorGlow.style.left = e.clientX + 'px';
+    cursorGlow.style.top = e.clientY + 'px';
+  }
+});
 
 // State
 let currentState = 'splash'; // splash, menu, theory, training
@@ -52,33 +61,34 @@ function render() {
 function renderSplash() {
   const splash = document.createElement('div');
   splash.id = 'splash-screen';
-  splash.innerHTML = `<img src="/logo.png" alt="R.O.B Logo">`;
+  splash.innerHTML = `
+    <img src="/logo.png" alt="R.O.B Logo">
+    <div class="splash-tagline">Personal OS</div>
+  `;
   app.appendChild(splash);
 
-  // Transition to menu after 2.5 seconds
   setTimeout(() => {
     splash.style.opacity = '0';
     setTimeout(() => {
       currentState = 'menu';
       render();
-    }, 800); // Wait for fade out transition
+    }, 800);
   }, 2500);
 }
 
 function renderHeader(title, onBack) {
-  const header = document.createElement('header');
-  
   if (onBack) {
     const nav = document.createElement('div');
     nav.className = 'nav-controls';
     const backBtn = document.createElement('button');
     backBtn.className = 'back-btn';
-    backBtn.textContent = '← НАЗАД В МЕНЮ';
+    backBtn.textContent = 'Назад';
     backBtn.onclick = onBack;
     nav.appendChild(backBtn);
     app.appendChild(nav);
   }
-  
+
+  const header = document.createElement('header');
   const h1 = document.createElement('h1');
   h1.textContent = title;
   header.appendChild(h1);
@@ -86,68 +96,50 @@ function renderHeader(title, onBack) {
 }
 
 function renderMenu() {
-  renderHeader('ТВОЙ ПУТЬ К ДАНКУ', null);
+  renderHeader('R.O.B OS', null);
   
   const menuContainer = document.createElement('div');
   menuContainer.className = 'menu-container';
-  
-  const workoutsBtn = document.createElement('button');
-  workoutsBtn.className = 'menu-btn';
-  workoutsBtn.innerHTML = `<i>⚡</i> ТРЕНИРОВКИ`;
-  workoutsBtn.onclick = () => { currentState = 'workouts_menu'; render(); };
-  
-  const filmingBtn = document.createElement('button');
-  filmingBtn.className = 'menu-btn';
-  filmingBtn.innerHTML = `<i>🎥</i> СЪЕМКИ`;
-  filmingBtn.onclick = () => { currentState = 'filming'; render(); };
-  
-  const offerBtn = document.createElement('button');
-  offerBtn.className = 'menu-btn';
-  offerBtn.innerHTML = `<i>💼</i> ПРОЕКТ ОФФЕР`;
-  offerBtn.onclick = () => { currentState = 'offer'; render(); };
-  
-  const trashBtn = document.createElement('button');
-  trashBtn.className = 'menu-btn';
-  trashBtn.innerHTML = `<i>🗑️</i> КОРЗИНА`;
-  trashBtn.onclick = () => { currentState = 'trash'; render(); };
-  
-  menuContainer.appendChild(workoutsBtn);
-  menuContainer.appendChild(filmingBtn);
-  menuContainer.appendChild(offerBtn);
-  menuContainer.appendChild(trashBtn);
+
+  const buttons = [
+    { emoji: '⚡', label: 'Тренировки', state: 'workouts_menu' },
+    { emoji: '🎥', label: 'Съёмки', state: 'filming' },
+    { emoji: '💼', label: 'Проект Оффер', state: 'offer' },
+    { emoji: '🗑️', label: 'Корзина', state: 'trash' },
+  ];
+
+  buttons.forEach(({ emoji, label, state }) => {
+    const btn = document.createElement('button');
+    btn.className = 'menu-btn';
+    btn.innerHTML = `<i>${emoji}</i>${label}<span class="menu-btn-arrow">›</span>`;
+    btn.onclick = () => { currentState = state; render(); };
+    menuContainer.appendChild(btn);
+  });
+
   app.appendChild(menuContainer);
 }
 
 function renderWorkoutsMenu() {
-  renderHeader('ТРЕНИРОВКИ', () => { currentState = 'menu'; render(); });
+  renderHeader('Тренировки', () => { currentState = 'menu'; render(); });
   
   const menuContainer = document.createElement('div');
   menuContainer.className = 'menu-container';
-  
-  const theoryBtn = document.createElement('button');
-  theoryBtn.className = 'menu-btn';
-  theoryBtn.innerHTML = `<i>📚</i> ТЕОРИЯ И БАЗА`;
-  theoryBtn.onclick = () => { currentState = 'theory'; render(); };
-  
-  const trainingBtn = document.createElement('button');
-  trainingBtn.className = 'menu-btn';
-  trainingBtn.innerHTML = `<i>🔥</i> ПРОГРАММА ТРЕНИРОВОК`;
-  trainingBtn.onclick = () => { currentState = 'training'; render(); };
-  
-  const outdoorBtn = document.createElement('button');
-  outdoorBtn.className = 'menu-btn';
-  outdoorBtn.innerHTML = `<i>🌲</i> ТРЕНИРОВКИ БЕЗ ЗАЛА`;
-  outdoorBtn.onclick = () => { currentState = 'outdoor_training'; render(); };
-  
-  const pktBtn = document.createElement('button');
-  pktBtn.className = 'menu-btn';
-  pktBtn.innerHTML = `<i>💊</i> ПКТ`;
-  pktBtn.onclick = () => { currentState = 'pkt'; render(); };
-  
-  menuContainer.appendChild(theoryBtn);
-  menuContainer.appendChild(trainingBtn);
-  menuContainer.appendChild(outdoorBtn);
-  menuContainer.appendChild(pktBtn);
+
+  const buttons = [
+    { emoji: '📚', label: 'Теория и База', state: 'theory' },
+    { emoji: '🔥', label: 'Программа (в зале)', state: 'training' },
+    { emoji: '🌲', label: 'Тренировки без зала', state: 'outdoor_training' },
+    { emoji: '💊', label: 'ПКТ', state: 'pkt' },
+  ];
+
+  buttons.forEach(({ emoji, label, state }) => {
+    const btn = document.createElement('button');
+    btn.className = 'menu-btn';
+    btn.innerHTML = `<i>${emoji}</i>${label}<span class="menu-btn-arrow">›</span>`;
+    btn.onclick = () => { currentState = state; render(); };
+    menuContainer.appendChild(btn);
+  });
+
   app.appendChild(menuContainer);
 }
 
@@ -202,7 +194,7 @@ function renderTrash() {
 }
 
 function renderOffer() {
-  renderHeader('ПРОЕКТ ОФФЕР', () => { currentState = 'menu'; render(); });
+  renderHeader('Проект Оффер', () => { currentState = 'menu'; render(); });
   
   const container = document.createElement('div');
   container.className = 'offer-container';
@@ -210,7 +202,7 @@ function renderOffer() {
   // Cover Letters Section
   const lettersSection = document.createElement('div');
   lettersSection.className = 'letters-section';
-  lettersSection.innerHTML = '<h2 style="margin-bottom:15px; color:var(--gold);">СОПРОВОДИТЕЛЬНЫЕ ПИСЬМА</h2>';
+  lettersSection.innerHTML = '<p class="section-heading">Сопроводительные письма</p>';
   
   coverLettersData.forEach(letter => {
     const btn = document.createElement('button');
@@ -238,7 +230,7 @@ function renderOffer() {
   const tasksSection = document.createElement('div');
   tasksSection.className = 'theory-list';
   tasksSection.style.marginTop = '40px';
-  tasksSection.innerHTML = '<h2 style="margin-bottom:15px; color:var(--gold);">ЗАДАНИЯ:</h2>';
+  tasksSection.innerHTML = '<p class="section-heading">Задания</p>';
   
   const deletedItems = getDeletedItems();
   const activeOfferTasks = offerData.filter(item => !deletedItems.includes(item.id));
@@ -251,9 +243,9 @@ function renderOffer() {
     header.className = 'theory-card-header';
     header.innerHTML = `
       <h3>${item.title}</h3>
-      <div>
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
         <button class="delete-btn" onclick="event.stopPropagation()">🗑️</button>
-        <div class="theory-card-icon" style="display:inline-block; margin-left:10px;">▼</div>
+        <div class="theory-card-icon">▾</div>
       </div>
     `;
     
@@ -284,7 +276,7 @@ function renderOffer() {
 }
 
 function renderFilming() {
-  renderHeader('МАТЕРИАЛЫ И ОТЧЕТЫ', () => { currentState = 'menu'; render(); });
+  renderHeader('Съёмки', () => { currentState = 'menu'; render(); });
   
   const list = document.createElement('div');
   list.className = 'theory-list';
@@ -300,9 +292,9 @@ function renderFilming() {
     header.className = 'theory-card-header';
     header.innerHTML = `
       <h3>${item.title}</h3>
-      <div>
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
         <button class="delete-btn" onclick="event.stopPropagation()">🗑️</button>
-        <div class="theory-card-icon" style="display:inline-block; margin-left:10px;">▼</div>
+        <div class="theory-card-icon">▾</div>
       </div>
     `;
     
@@ -332,7 +324,7 @@ function renderFilming() {
 }
 
 function renderTheory() {
-  renderTextCards('БИОМЕХАНИКА И ЦНС', theoryData, 'workouts_menu');
+  renderTextCards('Биомеханика и ЦНС', theoryData, 'workouts_menu');
 }
 
 function renderTextCards(headerTitle, textData, backRoute) {
@@ -349,7 +341,7 @@ function renderTextCards(headerTitle, textData, backRoute) {
     header.className = 'theory-card-header';
     header.innerHTML = `
       <h3>${item.title}</h3>
-      <div class="theory-card-icon">▼</div>
+      <div class="theory-card-icon">▾</div>
     `;
     
     const content = document.createElement('div');
