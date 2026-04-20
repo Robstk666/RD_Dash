@@ -1,4 +1,4 @@
-import { theoryData, trainingSchedule, filmingData, coverLettersData, offerData } from './data.js';
+import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData } from './data.js';
 
 // LocalStorage Utils for Trash functionality
 function getDeletedItems() {
@@ -33,7 +33,9 @@ function render() {
   } else if (currentState === 'theory') {
     renderTheory();
   } else if (currentState === 'training') {
-    renderTraining();
+    renderTraining(trainingSchedule, 'РАСПИСАНИЕ (В ЗАЛЕ)');
+  } else if (currentState === 'outdoor_training') {
+    renderTraining(outdoorTrainingSchedule, 'ТРЕНИРОВКИ БЕЗ ЗАЛА');
   } else if (currentState === 'workouts_menu') {
     renderWorkoutsMenu();
   } else if (currentState === 'filming') {
@@ -130,8 +132,14 @@ function renderWorkoutsMenu() {
   trainingBtn.innerHTML = `<i>🔥</i> ПРОГРАММА ТРЕНИРОВОК`;
   trainingBtn.onclick = () => { currentState = 'training'; render(); };
   
+  const outdoorBtn = document.createElement('button');
+  outdoorBtn.className = 'menu-btn';
+  outdoorBtn.innerHTML = `<i>🌲</i> ТРЕНИРОВКИ БЕЗ ЗАЛА`;
+  outdoorBtn.onclick = () => { currentState = 'outdoor_training'; render(); };
+  
   menuContainer.appendChild(theoryBtn);
   menuContainer.appendChild(trainingBtn);
+  menuContainer.appendChild(outdoorBtn);
   app.appendChild(menuContainer);
 }
 
@@ -373,8 +381,8 @@ function renderTheory() {
   app.appendChild(list);
 }
 
-function renderTraining() {
-  renderHeader('РАСПИСАНИЕ СОПРОТИВЛЕНИЯ', () => { currentState = 'workouts_menu'; render(); });
+function renderTraining(scheduleData, headingTitle) {
+  renderHeader(headingTitle, () => { currentState = 'workouts_menu'; render(); });
 
   const nav = document.createElement('div');
   nav.className = 'days-nav';
@@ -392,7 +400,7 @@ function renderTraining() {
     "Воскресенье": "ВСКР"
   };
 
-  trainingSchedule.forEach((dayData, index) => {
+  scheduleData.forEach((dayData, index) => {
     // Nav Tab
     const tab = document.createElement('div');
     tab.className = `day-tab ${index === 0 ? 'active' : ''}`;
