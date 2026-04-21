@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Exercise Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#5b005b",
+                    "surface-tint": "#abd600",
+                    "on-error-container": "#ffdad6",
+                    "surface-container": "#201f1f",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#b300b3",
+                    "surface-dim": "#131313",
+                    "surface-container-lowest": "#0e0e0e",
+                    "primary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#810081",
+                    "secondary-container": "#00eefc",
+                    "on-secondary-container": "#00686f",
+                    "outline": "#8e9379",
+                    "inverse-on-surface": "#313030",
+                    "primary-container": "#c3f400",
+                    "on-primary-container": "#556d00",
+                    "surface": "#131313",
+                    "secondary-fixed-dim": "#00dbe9",
+                    "surface-container-high": "#2a2a2a",
+                    "surface-container-highest": "#353534",
+                    "on-secondary": "#00363a",
+                    "secondary-fixed": "#7df4ff",
+                    "on-tertiary-fixed": "#380038",
+                    "on-primary-fixed-variant": "#3c4d00",
+                    "outline-variant": "#444933",
+                    "on-surface": "#e5e2e1",
+                    "inverse-surface": "#e5e2e1",
+                    "on-surface-variant": "#c4c9ac",
+                    "error-container": "#93000a",
+                    "tertiary-fixed-dim": "#ffabf3",
+                    "secondary": "#d3fbff",
+                    "background": "#131313",
+                    "surface-container-low": "#1c1b1b",
+                    "tertiary-fixed": "#ffd7f5",
+                    "on-primary": "#283500",
+                    "surface-variant": "#353534",
+                    "on-secondary-fixed": "#002022",
+                    "primary-fixed": "#c3f400",
+                    "on-background": "#e5e2e1",
+                    "inverse-primary": "#506600",
+                    "on-secondary-fixed-variant": "#004f54",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#161e00",
+                    "tertiary": "#ffffff",
+                    "surface-bright": "#3a3939",
+                    "primary-fixed-dim": "#abd600",
+                    "tertiary-container": "#ffd7f5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "grid-gutter": "16px",
+                    "lg": "24px",
+                    "container-margin": "24px",
+                    "xl": "48px",
+                    "md": "16px",
+                    "sm": "8px",
+                    "unit": "4px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Lexend"],
+                    "body-md": ["Lexend"],
+                    "body-lg": ["Lexend"],
+                    "headline-md": ["Lexend"],
+                    "display-xl": ["Lexend"],
+                    "label-caps": ["Lexend"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "display-xl": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Technical Grid Overlay */
+        .bg-technical-grid {
+            background-image: 
+                linear-gradient(rgba(204, 255, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(204, 255, 0, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        
+        /* Glassmorphism Frosted Plate */
+        .glass-plate {
+            background-color: rgba(42, 42, 42, 0.6); /* surface-container-high equiv */
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+            border-right: 1px solid rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 3D Matte Glass Button */
+        .btn-3d-matte {
+            position: relative;
+            background-color: rgba(195, 244, 0, 0.85); /* primary-container approx */
+            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 3px solid rgba(85, 109, 0, 0.8); /* on-primary-container approx */
+            box-shadow: 0 0 15px rgba(195, 244, 0, 0.3), 0 10px 20px rgba(0,0,0,0.5);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-3d-matte:hover {
+            box-shadow: 0 0 25px rgba(195, 244, 0, 0.5), 0 12px 24px rgba(0,0,0,0.6);
+            transform: translateY(-1px);
+        }
+        .btn-3d-matte:active {
+            border-bottom-width: 1px;
+            transform: translateY(2px);
+            box-shadow: 0 0 10px rgba(195, 244, 0, 0.4), 0 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md h-screen w-full overflow-hidden relative flex flex-col">
+<!-- The Void Base with Technical Grid -->
+<div class="absolute inset-0 bg-technical-grid pointer-events-none z-0"></div>
+<!-- Active Task Header (Suppresses standard nav shell per rules) -->
+<header class="relative z-10 w-full px-lg py-md flex justify-between items-center">
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low/50 backdrop-blur-md border border-white/5 text-primary hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-label-caps text-label-caps text-on-surface-variant mb-xs tracking-widest uppercase">ТЕКУЩЕЕ УПРАЖНЕНИЕ</span>
+<h1 class="font-headline-md text-headline-md text-primary uppercase tracking-tight">ПРИСЕДАНИЯ</h1>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-low/50 backdrop-blur-md border border-white/5 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_horiz</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="relative z-10 flex-1 flex flex-col px-lg pb-lg mt-sm">
+<!-- Timer Centerpiece -->
+<div class="flex-1 flex flex-col items-center justify-center -mt-xl">
+<!-- Pulsing Status Ring Background -->
+<div class="absolute w-64 h-64 bg-primary-container/5 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+<span class="font-label-caps text-label-caps text-primary-container mb-sm flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-primary-container animate-ping"></div>
+                ВРЕМЯ ОТДЫХА
+            </span>
+<div class="font-display-xl text-display-xl text-primary drop-shadow-[0_0_15px_rgba(255,255,255,0.2)] tracking-tighter tabular-nums">
+                01:45
+            </div>
+<!-- Progress Line -->
+<div class="w-32 h-1 bg-surface-container-high rounded-full mt-lg overflow-hidden">
+<div class="h-full bg-primary-container w-2/3 shadow-[0_0_10px_rgba(195,244,0,0.8)] rounded-full"></div>
+</div>
+</div>
+<!-- 3D Glassmorphism Details Grid -->
+<div class="grid grid-cols-2 gap-grid-gutter mb-xl relative z-20">
+<!-- Set Card -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between h-24 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start w-full">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">ПОДХОД</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">layers</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary flex items-baseline gap-xs">
+                    3 <span class="font-headline-md text-headline-md text-on-surface-variant">/ 5</span>
+</div>
+</div>
+<!-- Reps Card -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between h-24 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-start w-full">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">ПОВТОРЕНИЯ</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">repeat</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-primary">
+                    10 - 12
+                </div>
+</div>
+<!-- Weight Card -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between h-24 relative overflow-hidden group col-span-2">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex justify-between items-center w-full">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mb-xs">РАБОЧИЙ ВЕС</span>
+<div class="font-headline-lg text-headline-lg text-primary flex items-baseline gap-sm">
+                            120 <span class="font-body-md text-body-md text-on-surface-variant">КГ</span>
+</div>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-white/5 shadow-inner">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Prominent Camera Action Button -->
+<div class="w-full relative z-30 pb-sm">
+<button class="btn-3d-matte w-full rounded-xl py-md px-lg flex items-center justify-center gap-md">
+<span class="material-symbols-outlined text-on-primary-container text-[28px]" style="font-variation-settings: 'FILL' 1;">videocam</span>
+<span class="font-headline-md text-headline-md text-on-primary-container uppercase tracking-tight">ЗАПИСЬ ПОДХОДА</span>
+</button>
+</div>
+</main>
+</body></html>

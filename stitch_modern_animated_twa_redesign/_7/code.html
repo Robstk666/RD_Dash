@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>АРХИВ / КОРЗИНА</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#131313",
+                        "tertiary-container": "#ffd7f5",
+                        "primary-fixed": "#c3f400",
+                        "tertiary-fixed": "#ffd7f5",
+                        "outline": "#8e9379",
+                        "primary-fixed-dim": "#abd600",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#313030",
+                        "on-primary-fixed": "#161e00",
+                        "on-background": "#e5e2e1",
+                        "surface-variant": "#353534",
+                        "surface-tint": "#abd600",
+                        "inverse-surface": "#e5e2e1",
+                        "on-tertiary-fixed-variant": "#810081",
+                        "on-tertiary-fixed": "#380038",
+                        "outline-variant": "#444933",
+                        "surface-dim": "#131313",
+                        "surface-container-low": "#1c1b1b",
+                        "primary-container": "#c3f400",
+                        "on-primary-container": "#556d00",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#ffabf3",
+                        "secondary-container": "#00eefc",
+                        "surface": "#131313",
+                        "on-secondary": "#00363a",
+                        "secondary-fixed": "#7df4ff",
+                        "primary": "#ffffff",
+                        "inverse-primary": "#506600",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary": "#d3fbff",
+                        "on-tertiary-container": "#b300b3",
+                        "on-surface-variant": "#c4c9ac",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#00686f",
+                        "on-primary": "#283500",
+                        "on-tertiary": "#5b005b",
+                        "surface-container-highest": "#353534",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "on-secondary-fixed": "#002022",
+                        "tertiary": "#ffffff",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "surface-container": "#201f1f",
+                        "surface-bright": "#3a3939"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "48px",
+                        "xs": "4px",
+                        "unit": "4px",
+                        "grid-gutter": "16px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "display-xl": ["Lexend"],
+                        "label-caps": ["Lexend"],
+                        "headline-md": ["Lexend"],
+                        "body-lg": ["Lexend"],
+                        "body-md": ["Lexend"],
+                        "headline-lg": ["Lexend"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .grid-pattern {
+            background-image: linear-gradient(to right, rgba(204, 255, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(204, 255, 0, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#050505] text-on-background font-body-md min-h-screen relative overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- The Void Base + Grid -->
+<div class="fixed inset-0 grid-pattern z-0 pointer-events-none"></div>
+<!-- Background Glows -->
+<div class="fixed top-1/4 left-1/4 w-96 h-96 bg-primary-container/5 rounded-full blur-[100px] z-0 pointer-events-none"></div>
+<div class="fixed bottom-1/4 right-1/4 w-[500px] h-[500px] bg-error/5 rounded-full blur-[120px] z-0 pointer-events-none"></div>
+<!-- TopAppBar -->
+<header class="fixed docked full-width top-0 border-b border-white/10 z-50 bg-[#050505]/80 backdrop-blur-xl shadow-2xl flex justify-between items-center w-full px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full overflow-hidden border border-white/20">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young man with short hair looking confidently at the camera, studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmdowRkqflTp3HZ9QzcN3vm8OSO6jkjnsvHvtM5f5e8wJvcWWakEkr3-HTEIpdWDHFV1kkGDOEnV08TeKhbBB6_fL-IaeVRX44XRTOnVBva1CZp09LN1mSVz4x3Mao5gxj1LyfK1DneEE3_PSBumkePICGdNSTm234qFwGhSfUvmezwjsCdpu96HHgIGCYnmZwBASZ1z3OHoFyZmbDfYsX0HBptpdTE5gP-k417dgYP0YCjVn6JfLzo0VzlOPNyM70fTPHmX8rmE3t"/>
+</div>
+<span class="text-xl italic font-black text-[#CCFF00] drop-shadow-[0_0_8px_rgba(204,255,0,0.6)] font-['Lexend'] tracking-tighter uppercase">COMMAND</span>
+</div>
+<div class="flex items-center">
+<button class="text-[#CCFF00] hover:text-[#CCFF00] transition-colors active:scale-95 duration-100 flex items-center justify-center p-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">archive</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-[100px] pb-[120px] px-lg max-w-[1200px] mx-auto min-h-screen flex flex-col gap-lg">
+<!-- Header -->
+<div class="flex flex-col gap-sm mb-md">
+<h1 class="font-display-xl text-display-xl text-primary tracking-tighter">АРХИВ / <span class="text-error opacity-80">КОРЗИНА</span></h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+                Удаленные элементы хранятся здесь перед окончательным уничтожением.
+            </p>
+</div>
+<!-- Archive List (Bento-style rows) -->
+<div class="flex flex-col gap-md">
+<!-- Item 1: Training -->
+<div class="relative bg-surface-container-low/40 backdrop-blur-[20px] border border-white/10 rounded-xl p-6 overflow-hidden group hover:border-primary-container/30 transition-all duration-300">
+<!-- Highlight line -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-primary-container/50 to-transparent"></div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between relative z-10">
+<div class="flex items-center gap-6 flex-1">
+<!-- Icon Plate -->
+<div class="w-16 h-16 rounded-lg bg-[#050505]/50 border border-white/5 flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">fitness_center</span>
+</div>
+<!-- Details -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-label-caps bg-surface-variant text-on-surface px-2 py-1 rounded-sm uppercase tracking-widest flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+                                    Тренировка
+                                </span>
+<span class="font-label-caps text-label-caps text-outline">Удалено: 2 часа назад</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">Ноги: Взрыв</h3>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-surface-variant/50 border-t border-white/20 border-b-2 border-surface-container-lowest text-primary font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(204,255,0,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">restore</span>
+                            ВОССТАНОВИТЬ
+                        </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-error-container/20 border-t border-error/30 border-b-2 border-error-container/80 text-error font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(255,180,171,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">delete_forever</span>
+                            УДАЛИТЬ
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 2: Shooting -->
+<div class="relative bg-surface-container-low/40 backdrop-blur-[20px] border border-white/10 rounded-xl p-6 overflow-hidden group hover:border-secondary-container/30 transition-all duration-300">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-secondary-container/50 to-transparent"></div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between relative z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="w-16 h-16 rounded-lg bg-[#050505]/50 border border-white/5 flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">videocam</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-label-caps bg-surface-variant text-on-surface px-2 py-1 rounded-sm uppercase tracking-widest flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+                                    Съемка
+                                </span>
+<span class="font-label-caps text-label-caps text-outline">Удалено: Вчера</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">Локация: Завод</h3>
+</div>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-surface-variant/50 border-t border-white/20 border-b-2 border-surface-container-lowest text-primary font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(204,255,0,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">restore</span>
+                            ВОССТАНОВИТЬ
+                        </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-error-container/20 border-t border-error/30 border-b-2 border-error-container/80 text-error font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(255,180,171,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">delete_forever</span>
+                            УДАЛИТЬ
+                        </button>
+</div>
+</div>
+</div>
+<!-- Item 3: Project -->
+<div class="relative bg-surface-container-low/40 backdrop-blur-[20px] border border-white/10 rounded-xl p-6 overflow-hidden group hover:border-[#b300b3]/30 transition-all duration-300">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-[#b300b3]/50 to-transparent"></div>
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-center justify-between relative z-10">
+<div class="flex items-center gap-6 flex-1">
+<div class="w-16 h-16 rounded-lg bg-[#050505]/50 border border-white/5 flex items-center justify-center shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">layers</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3">
+<span class="font-label-caps text-label-caps bg-surface-variant text-on-surface px-2 py-1 rounded-sm uppercase tracking-widest flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-[#b300b3] animate-pulse"></span>
+                                    Оффер
+                                </span>
+<span class="font-label-caps text-label-caps text-outline">Удалено: 3 дня назад</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mt-1">Клип для Nike</h3>
+</div>
+</div>
+<div class="flex items-center gap-4 w-full md:w-auto mt-4 md:mt-0">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-surface-variant/50 border-t border-white/20 border-b-2 border-surface-container-lowest text-primary font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(204,255,0,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">restore</span>
+                            ВОССТАНОВИТЬ
+                        </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-error-container/20 border-t border-error/30 border-b-2 border-error-container/80 text-error font-label-caps text-label-caps hover:shadow-[0_0_15px_rgba(255,180,171,0.2)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-lg">delete_forever</span>
+                            УДАЛИТЬ
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Global Empty State / Clean Action -->
+<div class="mt-xl flex justify-end">
+<button class="flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-transparent border border-error/50 text-error font-label-caps text-label-caps hover:bg-error/10 hover:shadow-[0_0_20px_rgba(255,180,171,0.15)] active:translate-y-[2px] transition-all duration-200">
+<span class="material-symbols-outlined text-xl">delete</span>
+                ОЧИСТИТЬ КОРЗИНУ
+            </button>
+</div>
+</main>
+<!-- Navigation Suppressed: Content is a specialized transactional/dead-end state (Archive/Trash) -->
+<!-- Navigation intentionally omitted per "The UX Goal" rule -->
+</body></html>

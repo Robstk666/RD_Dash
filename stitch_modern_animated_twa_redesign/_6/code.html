@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ТРЕНИРОВКИ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#3a3939",
+                        "secondary-fixed": "#7df4ff",
+                        "primary-fixed": "#c3f400",
+                        "surface-variant": "#353534",
+                        "outline": "#8e9379",
+                        "surface": "#131313",
+                        "tertiary-container": "#ffd7f5",
+                        "inverse-surface": "#e5e2e1",
+                        "primary": "#ffffff",
+                        "surface-container": "#201f1f",
+                        "primary-container": "#c3f400",
+                        "on-surface": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#444933",
+                        "surface-dim": "#131313",
+                        "on-secondary-fixed-variant": "#004f54",
+                        "on-primary-fixed-variant": "#3c4d00",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#ffffff",
+                        "surface-container-highest": "#353534",
+                        "on-primary": "#283500",
+                        "tertiary-fixed": "#ffd7f5",
+                        "error-container": "#93000a",
+                        "on-primary-container": "#556d00",
+                        "surface-container-high": "#2a2a2a",
+                        "on-error": "#690005",
+                        "surface-container-low": "#1c1b1b",
+                        "secondary-fixed-dim": "#00dbe9",
+                        "secondary-container": "#00eefc",
+                        "on-background": "#e5e2e1",
+                        "on-secondary-container": "#00686f",
+                        "on-surface-variant": "#c4c9ac",
+                        "on-secondary-fixed": "#002022",
+                        "on-tertiary": "#5b005b",
+                        "on-primary-fixed": "#161e00",
+                        "on-tertiary-fixed": "#380038",
+                        "secondary": "#d3fbff",
+                        "on-secondary": "#00363a",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed-variant": "#810081",
+                        "primary-fixed-dim": "#abd600",
+                        "tertiary-fixed-dim": "#ffabf3",
+                        "surface-tint": "#abd600",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-tertiary-container": "#b300b3",
+                        "background": "#131313",
+                        "inverse-primary": "#506600"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "grid-gutter": "16px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "48px",
+                        "xs": "4px",
+                        "container-margin": "24px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Lexend", "sans-serif"],
+                        "display-xl": ["Lexend", "sans-serif"],
+                        "headline-lg": ["Lexend", "sans-serif"],
+                        "headline-md": ["Lexend", "sans-serif"],
+                        "body-lg": ["Lexend", "sans-serif"],
+                        "label-caps": ["Lexend", "sans-serif"],
+                        "body-md": ["Lexend", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "display-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .grid-bg {
+            background-image: linear-gradient(to right, rgba(204, 255, 0, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(204, 255, 0, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .glass-plate {
+            backdrop-filter: blur(20px);
+            border: 1px solid transparent;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            border-image: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%) 1;
+        }
+        .matte-glass-btn {
+            background-color: rgba(195, 244, 0, 0.1);
+            border-top: 1px solid rgba(195, 244, 0, 0.4);
+            border-bottom: 2px solid rgba(60, 77, 0, 0.6);
+            transition: all 0.2s ease;
+        }
+        .matte-glass-btn:hover {
+            box-shadow: 0 0 15px rgba(195, 244, 0, 0.3);
+        }
+        .matte-glass-btn:active {
+            transform: translateY(2px);
+        }
+        .glow-text {
+            text-shadow: 0 0 8px rgba(195, 244, 0, 0.4);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-[#050505] text-on-surface font-sans text-body-md min-h-screen grid-bg pb-24 pt-16">
+<!-- TopAppBar -->
+<header class="fixed bg-[#050505]/80 backdrop-blur-xl docked full-width top-0 border-b border-white/5 shadow-2xl flex justify-between items-center w-full px-6 py-4 z-50">
+<div class="flex items-center gap-sm">
+<img alt="User Profile Avatar" class="w-8 h-8 rounded-full border border-primary-fixed" data-alt="close up portrait of a young man looking directly at camera with neutral expression against neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY2_SNe4wPgMm_01Kz07y8vWcjxKdW6MVwflzYwCkwSHa7JyOnBUTY7IVsx4AExyBHb1MZkYaOk4sMwA6U2gTuSroqMj0y3s0DZl-cjTZeF1RpFGAPGF_RADMPWPsMgE0Hw7qjhbAebGPaArGy_rFaHwE-moGgzSmjT8lyUbumoZC1sAATFdDAcsiJBpD5CSORTkHNtZgGiyWRYv9qCi-SkzqivQxonehjvFtBWjjBmzt6Bm3_jXF3d5M9vZ3pPg8Kb62FjNRncncN"/>
+</div>
+<h1 class="font-['Lexend'] font-black tracking-tighter uppercase text-xl italic text-[#CCFF00] drop-shadow-[0_0_8px_rgba(204,255,0,0.6)]">COMMAND</h1>
+<a class="text-white/60 hover:text-[#CCFF00] transition-colors active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">archive</span>
+</a>
+</header>
+<main class="max-w-7xl mx-auto px-lg py-xl flex flex-col gap-xl">
+<!-- Hero Section -->
+<section class="flex flex-col gap-md">
+<h2 class="font-headline-lg text-headline-lg text-primary glow-text uppercase font-bold tracking-tight">АКТИВНЫЕ ПРОГРАММЫ</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-grid-gutter">
+<!-- Program Card 1 -->
+<div class="glass-plate rounded-xl p-lg relative overflow-hidden flex flex-col gap-md group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-fixed/10 to-transparent opacity-50"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="font-label-caps text-label-caps text-primary-fixed flex items-center gap-xs font-bold uppercase tracking-wider">
+<span class="w-2 h-2 rounded-full bg-primary-fixed animate-pulse"></span>
+                                СИЛОВАЯ ВЫНОСЛИВОСТЬ
+                            </span>
+<h3 class="font-headline-md text-headline-md text-primary font-bold uppercase tracking-tight">ФАЗА 03: АБСОЛЮТ</h3>
+</div>
+<span class="material-symbols-outlined text-primary-fixed text-3xl">fitness_center</span>
+</div>
+<div class="relative z-10 flex flex-col gap-sm mt-auto">
+<div class="flex justify-between font-label-caps text-label-caps text-on-surface-variant font-bold uppercase tracking-wider">
+<span>ПРОГРЕСС</span>
+<span>65%</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary-fixed w-[65%] shadow-[0_0_10px_rgba(195,244,0,0.8)] relative">
+<div class="absolute right-0 top-0 bottom-0 w-4 bg-white/50 blur-[2px]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Program Card 2 -->
+<div class="glass-plate rounded-xl p-lg relative overflow-hidden flex flex-col gap-md">
+<div class="absolute inset-0 bg-gradient-to-br from-secondary-fixed/5 to-transparent opacity-50"></div>
+<div class="relative z-10 flex justify-between items-start">
+<div class="flex flex-col gap-xs">
+<span class="font-label-caps text-label-caps text-surface-variant flex items-center gap-xs font-bold uppercase tracking-wider">
+                                ВОССТАНОВЛЕНИЕ
+                            </span>
+<h3 class="font-headline-md text-headline-md text-on-surface-variant font-bold uppercase tracking-tight">МЕТАБОЛИЧЕСКИЙ РЕЗЕРВ</h3>
+</div>
+<span class="material-symbols-outlined text-surface-variant text-3xl">health_and_safety</span>
+</div>
+<div class="relative z-10 flex flex-col gap-sm mt-auto">
+<button class="matte-glass-btn font-label-caps text-label-caps text-primary py-sm px-md rounded-lg self-start font-bold uppercase tracking-wider">
+                            АКТИВИРОВАТЬ
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Exercises Bento Grid -->
+<section class="flex flex-col gap-md">
+<h2 class="font-headline-md text-headline-md text-primary-fixed uppercase font-bold tracking-tight">УПРАЖНЕНИЯ НА СЕГОДНЯ</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-grid-gutter auto-rows-[200px]">
+<!-- Exercise 1 -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between relative overflow-hidden matte-glass-btn group cursor-pointer md:col-span-2">
+<div class="absolute inset-0 z-0">
+<img alt="Athlete deadlifting" class="w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="muscular athlete performing heavy deadlift in dark industrial gym with dramatic spotlighting and chalk dust in air" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNSxkRtlsbbOmzkKdgiQ8Wwip9PIsGYNy0pqn9LwrOpRo6y-cZovJbY2ClXaHTvg63lrET1oC5xoade9FnK4BWt59o5CMIiMl7omK5PVd4E5X3Qgmr2bERAURanwf1YOkIMptl0DuTFkUfKri3jWj2gtez4vgmtiSrFXnnh0mZcCErVwhdTAPWCg-ngACFsMGQX-fN8WNGqLex1_Hw0TCARCUE-IDAe-ybjDnxMZdGviTvacxguxyIqWlaQEp1BqvsbGjHNJMVHPY_"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent z-0"></div>
+<div class="relative z-10 flex justify-between items-start">
+<span class="bg-surface-container-high/80 backdrop-blur-md px-sm py-xs rounded font-label-caps text-label-caps text-primary-fixed border border-primary-fixed/20 font-bold uppercase tracking-wider">БАЗА</span>
+<span class="material-symbols-outlined text-primary-fixed">play_circle</span>
+</div>
+<div class="relative z-10 flex flex-col">
+<h4 class="font-headline-md text-headline-md text-primary font-bold uppercase tracking-tight">СТАНОВАЯ ТЯГА</h4>
+<p class="font-body-md text-body-md text-on-surface-variant font-medium uppercase">5 ПОДХОДОВ • 5-3-1 ПОВТОРЕНИЯ</p>
+</div>
+</div>
+<!-- Exercise 2 -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between relative overflow-hidden matte-glass-btn group cursor-pointer">
+<div class="absolute inset-0 z-0">
+<img alt="Kettlebell swing" class="w-full h-full object-cover opacity-30 grayscale group-hover:grayscale-0 transition-all duration-500" data-alt="close up of heavy black iron kettlebell mid swing in dark gym setting with blurred motion background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7tH8CfWcG0thwjY68u5m3PYczif7KTCiBLTpSqh9Ccyz7kBet03zuY8lKrAd4M78AF2qBx2s2e1IfNGTpuwJkRQO2qduY5_7_6IbewEuE1TUSB3pxi2BUds4Q8uameP-Dh-I60UEB2ZAYVTjrrM3hSKnib0q-Yl-4okR1m2cktdh6Vwzr6bX7_0D4OpLDcwPispi0Ggo6_FT2zjjcTqnsWBdJz1HphVoC2E9vWxVPO7GXiYCdjJxYLpCZ6kQYBaRAdU4EapYNR-bG"/>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/50 to-transparent z-0"></div>
+<div class="relative z-10 flex justify-between items-start">
+<span class="bg-surface-container-high/80 backdrop-blur-md px-sm py-xs rounded font-label-caps text-label-caps text-secondary-fixed border border-secondary-fixed/20 font-bold uppercase tracking-wider">ВЗРЫВ</span>
+</div>
+<div class="relative z-10 flex flex-col">
+<h4 class="font-body-lg text-body-lg text-primary font-bold uppercase tracking-tight">МАХИ ГИРЕЙ</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-xs font-medium uppercase">4 х 15 ПОВТОРЕНИЙ</p>
+</div>
+</div>
+<!-- Exercise 3 -->
+<div class="glass-plate rounded-xl p-md flex flex-col justify-between relative overflow-hidden matte-glass-btn group cursor-pointer">
+<div class="relative z-10 flex justify-between items-start">
+<span class="bg-surface-container-high/80 backdrop-blur-md px-sm py-xs rounded font-label-caps text-label-caps text-tertiary-container border border-tertiary-container/20 font-bold uppercase tracking-wider">СТАТИКА</span>
+</div>
+<div class="relative z-10 flex flex-col items-center justify-center h-full">
+<span class="material-symbols-outlined text-4xl text-tertiary-container mb-sm">accessibility_new</span>
+<h4 class="font-body-lg text-body-lg text-primary font-bold text-center uppercase tracking-tight">ПЛАНКА С ВЕСОМ</h4>
+<p class="font-label-caps text-label-caps text-on-surface-variant mt-xs font-medium uppercase">3 х 60 СЕКУНД</p>
+</div>
+</div>
+<!-- Data Widget -->
+<div class="glass-plate rounded-xl p-md flex flex-col relative overflow-hidden md:col-span-2">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant mb-md font-bold uppercase tracking-wider">БИОМЕТРИЯ СЕССИИ</h4>
+<div class="flex justify-between items-end h-full w-full gap-unit">
+<!-- Mock chart bars -->
+<div class="w-full bg-primary-fixed/20 rounded-t-sm h-[30%] relative"><div class="absolute top-[-20px] left-1/2 -translate-x-1/2 text-[10px] text-primary-fixed/50 font-sans font-bold">120</div></div>
+<div class="w-full bg-primary-fixed/40 rounded-t-sm h-[50%]"></div>
+<div class="w-full bg-primary-fixed/60 rounded-t-sm h-[70%]"></div>
+<div class="w-full bg-primary-fixed/80 rounded-t-sm h-[90%] shadow-[0_0_10px_rgba(195,244,0,0.5)] relative"><div class="absolute top-[-20px] left-1/2 -translate-x-1/2 text-[10px] text-primary-fixed font-bold font-sans">165</div></div>
+<div class="w-full bg-primary-fixed/50 rounded-t-sm h-[60%]"></div>
+<div class="w-full bg-primary-fixed/30 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-primary-fixed/20 rounded-t-sm h-[20%]"></div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 bg-[#050505]/90 backdrop-blur-2xl border-t border-[#CCFF00]/20 rounded-t-lg shadow-[0_-10px_30px_rgba(0,0,0,0.5)] md:hidden">
+<a class="flex flex-col items-center justify-center text-[#CCFF00] bg-white/5 rounded-xl px-4 py-2 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)] border-b-2 border-[#CCFF00] active:translate-y-[-2px] transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">fitness_center</span>
+<span class="font-['Lexend'] font-bold text-[10px] tracking-widest uppercase mt-1">ТРЕНИРОВКИ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 opacity-60 px-4 py-2 hover:opacity-100 hover:text-[#CCFF00] active:translate-y-[-2px] transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">videocam</span>
+<span class="font-['Lexend'] font-bold text-[10px] tracking-widest uppercase mt-1">СЪЕМКИ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-gray-500 opacity-60 px-4 py-2 hover:opacity-100 hover:text-[#CCFF00] active:translate-y-[-2px] transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">layers</span>
+<span class="font-['Lexend'] font-bold text-[10px] tracking-widest uppercase mt-1">ПРОЕКТ</span>
+</a>
+</nav>
+</body></html>

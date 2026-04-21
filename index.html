@@ -3,18 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>R.O.B — Personal OS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>R.O.B — Command Center</title>
     <meta name="description" content="Персональная операционная система для тренировок, съемок и карьеры" />
+    <!-- Lexend Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
+    <style>
+      /* Fix bottom nav positioning for full-screen */
+      #bottom-nav {
+        position: fixed;
+        bottom: 0; left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 500px;
+      }
+    </style>
   </head>
   <body>
-    <div id="cursor-glow"></div>
     <div id="app">
-      <!-- App content injected here by main.js -->
+      <!-- App content injected by main.js -->
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
