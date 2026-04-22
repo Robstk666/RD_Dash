@@ -189,7 +189,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   position: relative;
   z-index: 1;
   object-fit: contain;
-  /* Invert: black text on white → white glyph on dark background */
+  /* bg is now transparent — invert makes black → white, nothing else shows */
   filter: invert(1) drop-shadow(0 0 32px rgba(204,255,0,0.5)) drop-shadow(0 0 80px rgba(204,255,0,0.25));
   animation: splashGlow 2s infinite ease-in-out;
 }
@@ -232,15 +232,31 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .top-bar.magenta .top-bar-title { color: var(--magenta); }
 
 /* ─── TOP BAR LOGO ───────────────────── */
-/* Logo is black on white bg → invert makes it white on black → blends with dark */
+/* bg is transparent now — invert turns black → white, clean result */
 .top-bar-logo {
   height: 36px;
   max-width: 140px;
   width: auto;
   object-fit: contain;
-  filter: invert(1);
-  opacity: 0.88;
+  filter: invert(1) brightness(1.1);
+  opacity: 0.9;
   display: block;
+}
+
+/* ─── HOME BACKGROUND LOGO WATERMARK ─── */
+.home-bg-logo {
+  position: fixed;
+  /* centered horizontally, vertically roughly middle of screen */
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  width: min(90vw, 440px);
+  height: auto;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+  filter: invert(1);
+  user-select: none;
 }
 
 .top-bar-back {

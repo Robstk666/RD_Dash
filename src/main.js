@@ -34,6 +34,10 @@ function render() {
   document.body.className = `section-${color === 'lime' ? 'training' : color === 'cyan' ? 'filming' : color === 'magenta' ? 'offer' : 'trash'}`;
 
   app.innerHTML = '';
+
+  // Clean up fixed elements appended to body
+  document.querySelectorAll('.home-bg-logo').forEach(el => el.remove());
+
   renderBottomNav(); // always after innerHTML clear, before content
 
   if (currentState === 'splash')                renderSplash();
@@ -207,6 +211,13 @@ function renderWorkoutsMenu() {
   // No back button — this IS the Training home screen
   renderTopBar('', null, '', true); // showLogo=true
 
+  // ✅ Background watermark logo — fixed, behind everything
+  const bgLogo = document.createElement('img');
+  bgLogo.src = '/logo.png';
+  bgLogo.alt = '';
+  bgLogo.className = 'home-bg-logo';
+  document.body.appendChild(bgLogo);
+
   const content = document.createElement('div');
   content.className = 'screen-content';
 
@@ -247,6 +258,7 @@ function renderWorkoutsMenu() {
   content.appendChild(nav);
   app.appendChild(content);
 }
+
 
 // ─── TEXT CARDS (Theory / PKT / generic) ─────────
 function renderTextCards(title, data, backState, accentColor = 'lime') {
