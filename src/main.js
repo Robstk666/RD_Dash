@@ -34,42 +34,45 @@ function render() {
   document.body.className = `section-${color === 'lime' ? 'training' : color === 'cyan' ? 'filming' : color === 'magenta' ? 'offer' : 'trash'}`;
 
   app.innerHTML = '';
-  renderBottomNav();
+  renderBottomNav(); // always after innerHTML clear, before content
 
-  if (currentState === 'splash')           renderSplash();
-  else if (currentState === 'menu')        renderMenu();
-  else if (currentState === 'workouts_menu') renderWorkoutsMenu();
-  else if (currentState === 'theory')      renderTextCards('Биомеханика и ЦНС', theoryData, 'workouts_menu', 'lime');
-  else if (currentState === 'training')    renderTraining(trainingSchedule, 'Программа (в зале)');
+  if (currentState === 'splash')                renderSplash();
+  else if (currentState === 'workouts_menu')    renderWorkoutsMenu();
+  else if (currentState === 'theory')           renderTextCards('Биомеханика и ЦНС', theoryData, 'workouts_menu', 'lime');
+  else if (currentState === 'training')         renderTraining(trainingSchedule, 'Программа (в зале)');
   else if (currentState === 'outdoor_training') renderTraining(outdoorTrainingSchedule, 'Тренировки без зала');
-  else if (currentState === 'pkt')         renderTextCards('ПКТ', pktData, 'workouts_menu', 'lime');
-  else if (currentState === 'filming')     renderFilming();
-  else if (currentState === 'offer')       renderOffer();
-  else if (currentState === 'trash')       renderTrash();
+  else if (currentState === 'pkt')              renderTextCards('ПКТ', pktData, 'workouts_menu', 'lime');
+  else if (currentState === 'filming')          renderFilming();
+  else if (currentState === 'offer')            renderOffer();
+  else if (currentState === 'trash')            renderTrash();
 }
 
 // ─── BOTTOM NAV ─────────────────────────────────
 function renderBottomNav() {
+  // ✅ Always remove old nav first to prevent stacking
+  const existing = document.getElementById('bottom-nav');
+  if (existing) existing.remove();
+
   if (currentState === 'splash') return;
 
-  const getState = (s) => {
+  const getActiveSection = (s) => {
     if (['workouts_menu','theory','training','outdoor_training','pkt'].includes(s)) return 'training';
     return s;
   };
-  const active = getState(currentState);
+  const active = getActiveSection(currentState);
 
   const nav = document.createElement('nav');
   nav.id = 'bottom-nav';
 
   const navItems = [
-    { key: 'training', icon: '⚡', label: 'Тренировки', color: '', state: 'workouts_menu' },
-    { key: 'filming',  icon: '🎥', label: 'Съёмки',     color: 'cyan',    state: 'filming' },
-    { key: 'offer',    icon: '💼', label: 'Оффер',       color: 'magenta', state: 'offer' },
-    { key: 'trash',    icon: '🗑️', label: 'Архив',      color: 'red',     state: 'trash' },
+    { key: 'training', icon: '⚡', label: 'Тренировки', color: '',         state: 'workouts_menu' },
+    { key: 'filming',  icon: '🎥', label: 'Съёмки',     color: 'cyan',     state: 'filming' },
+    { key: 'offer',    icon: '💼', label: 'Оффер',       color: 'magenta',  state: 'offer' },
+    { key: 'trash',    icon: '🗑️', label: 'Архив',      color: 'red',      state: 'trash' },
   ];
 
   navItems.forEach(({ key, icon, label, color, state }) => {
-    const isActive = active === key || (active === 'menu' && key === 'training');
+    const isActive = active === key;
     const btn = document.createElement('button');
     btn.className = `nav-item ${isActive ? 'active ' + (color || '') : ''}`;
     btn.innerHTML = `
@@ -84,7 +87,8 @@ function renderBottomNav() {
 }
 
 // ─── TOP BAR ────────────────────────────────────
-function renderTopBar(title, onBack, colorClass = '') {
+// showLogo=true → show R.O.B logo instead of text title (for main section screens)
+function renderTopBar(title, onBack, colorClass = '', showLogo = false) {
   const bar = document.createElement('div');
   bar.className = `top-bar ${colorClass}`;
 
@@ -100,10 +104,18 @@ function renderTopBar(title, onBack, colorClass = '') {
     bar.appendChild(spacer);
   }
 
-  const titleEl = document.createElement('span');
-  titleEl.className = 'top-bar-title';
-  titleEl.textContent = title;
-  bar.appendChild(titleEl);
+  if (showLogo) {
+    const logo = document.createElement('img');
+    logo.src = '/logo.png';
+    logo.alt = 'R.O.B';
+    logo.className = 'top-bar-logo';
+    bar.appendChild(logo);
+  } else {
+    const titleEl = document.createElement('span');
+    titleEl.className = 'top-bar-title';
+    titleEl.textContent = title;
+    bar.appendChild(titleEl);
+  }
 
   const spacer2 = document.createElement('div');
   spacer2.style.width = '36px';
@@ -117,14 +129,15 @@ function renderSplash() {
   const splash = document.createElement('div');
   splash.id = 'splash-screen';
   splash.innerHTML = `
-    <img src="/logo.png" alt="R.O.B Logo">
+    <img src="/logo.png" alt="R.O.B Logo" class="splash-logo">
     <span class="splash-label">Command Center</span>
   `;
   app.appendChild(splash);
 
   setTimeout(() => {
     splash.style.opacity = '0';
-    setTimeout(() => { currentState = 'menu'; render(); }, 800);
+    // ✅ Go directly to workouts_menu — skip intermediate menu screen
+    setTimeout(() => { currentState = 'workouts_menu'; render(); }, 800);
   }, 2500);
 }
 
@@ -189,9 +202,10 @@ function renderMenu() {
   app.appendChild(content);
 }
 
-// ─── WORKOUTS SUBMENU ────────────────────────────
+// ─── WORKOUTS HOME (Training section home) ────────────────────────
 function renderWorkoutsMenu() {
-  renderTopBar('Тренировки', () => { currentState = 'menu'; render(); }, '');
+  // No back button — this IS the Training home screen
+  renderTopBar('', null, '', true); // showLogo=true
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -295,7 +309,7 @@ function renderTextCards(title, data, backState, accentColor = 'lime') {
 
 // ─── FILMING SECTION ────────────────────────────
 function renderFilming() {
-  renderTopBar('Съёмки', () => { currentState = 'menu'; render(); }, 'cyan');
+  renderTopBar('', null, 'cyan', true); // logo, no back
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -352,7 +366,7 @@ function renderFilming() {
 
 // ─── OFFER SECTION ──────────────────────────────
 function renderOffer() {
-  renderTopBar('Проект Оффер', () => { currentState = 'menu'; render(); }, 'magenta');
+  renderTopBar('', null, 'magenta', true); // logo, no back
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -439,7 +453,7 @@ function renderOffer() {
 
 // ─── TRASH SECTION ──────────────────────────────
 function renderTrash() {
-  renderTopBar('Архив / Корзина', () => { currentState = 'menu'; render(); }, '');
+  renderTopBar('', null, '', true); // logo, no back
 
   const content = document.createElement('div');
   content.className = 'screen-content';
