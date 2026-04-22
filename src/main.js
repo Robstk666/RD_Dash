@@ -142,7 +142,7 @@ function renderSplash() {
     splash.style.opacity = '0';
     // ✅ Go directly to workouts_menu — skip intermediate menu screen
     setTimeout(() => { currentState = 'workouts_menu'; render(); }, 800);
-  }, 2500);
+  }, 4000);
 }
 
 // ─── MAIN MENU ──────────────────────────────────
