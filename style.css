@@ -515,11 +515,13 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .collapse-header:active { background: rgba(255,255,255,0.05); }
 
 .collapse-title {
-  font-size: 15px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 18px;
   color: var(--text);
-  line-height: 1.35;
+  line-height: 1.2;
   flex: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .collapse-chevron {
@@ -780,10 +782,11 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .exercise:hover { background: rgba(255,255,255,0.02); border-color: var(--border-light); }
 
 .exercise-name {
-  font-size: 14px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 19px;
   color: var(--text);
-  margin-bottom: 5px;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
 }
 
 .exercise-desc {
@@ -845,9 +848,10 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   background: rgba(20,20,20,0.7);
   backdrop-filter: blur(20px);
   color: var(--text);
-  font-family: var(--font);
-  font-size: 14px;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   text-align: left;
   cursor: pointer;
   margin-bottom: 10px;
