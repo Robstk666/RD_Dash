@@ -4,7 +4,7 @@
    ============================================ */
 
 /* ─── FONTS ────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Neucha&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap');
 
 :root {
@@ -47,7 +47,8 @@
   --border-top:   rgba(255,255,255,0.2);
 
   /* Typography Scale */
-  --font: 'Lexend', sans-serif;
+  --font: 'Arial', sans-serif;
+  --font-display: 'Neucha', 'Arial', sans-serif;
 
   /* Layout */
   --bottom-nav-h: 72px;
@@ -221,9 +222,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .top-bar-title {
-  font-size: 13px;
-  font-weight: 800;
-  letter-spacing: 0.2em;
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--lime);
 }
@@ -327,10 +328,10 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .hud-title {
-  font-size: 36px;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: 38px;
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--text);
 }
@@ -456,10 +457,10 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .menu-card.red .menu-card-label     { color: #ff7070; }
 
 .menu-card-title {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 26px;
   color: var(--text);
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 .menu-card-arrow {
@@ -612,7 +613,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .nav-item:active { transform: translateY(2px); }
 
 .nav-item.active {
-  transform: scale(1.1);
+  transform: scale(1.1) translateY(-2px);
   background: transparent;
   color: var(--lime);
   border-bottom: 2px solid var(--lime);
@@ -628,9 +629,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .nav-item-label {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -676,9 +677,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 
 /* ─── SESSION CARDS ──────────────────── */
 .day-title {
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 34px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--lime);
   line-height: 1;
@@ -718,10 +719,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .session-time {
-  font-size: 20px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 26px;
   color: var(--text);
-  letter-spacing: -0.01em;
 }
 
 .badges {
@@ -989,7 +989,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   color: var(--text-dim);
 }
 .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; display: block; opacity: 0.4; }
-.empty-state p { font-size: 14px; }
+.empty-state p { font-family: var(--font-display); font-size: 18px; }
 
 /* ─── SETTINGS / TASK FORM ───────────────── */
 .settings-form { padding: 0; }
