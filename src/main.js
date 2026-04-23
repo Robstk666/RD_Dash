@@ -527,12 +527,37 @@ function renderSettings() {
       <textarea id="task-desc" placeholder="Описание / детали" rows="3" class="glass-input"></textarea>
       
       <div class="task-radios">
-        <label class="radio-label"><input type="radio" name="task-section" value="training" checked> <span>Тренировки</span></label>
-        <label class="radio-label"><input type="radio" name="task-section" value="filming"> <span>Съёмки</span></label>
-        <label class="radio-label"><input type="radio" name="task-section" value="offer"> <span>Оффер</span></label>
+        <div class="checkbox-wrapper">
+          <input type="radio" class="check" name="task-section" value="training" id="rt1" checked>
+          <label for="rt1" class="label">
+            <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
+            <span>Тренировки</span>
+          </label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="radio" class="check" name="task-section" value="filming" id="rt2">
+          <label for="rt2" class="label">
+            <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
+            <span>Съёмки</span>
+          </label>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="radio" class="check" name="task-section" value="offer" id="rt3">
+          <label for="rt3" class="label">
+            <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
+            <span>Оффер</span>
+          </label>
+        </div>
       </div>
       
-      <button id="task-submit" class="primary-btn btn-lightning"><span>Добавить в базу</span></button>
+      <button id="task-submit" class="primary-btn btn-lightning" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+        <svg width="22" height="22" viewBox="0 0 24 24" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none">
+          <path d="m19,21H5c-1.1,0-2-.9-2-2V5c0-1.1.9-2,2-2h11l5,5v11c0,1.1-.9,2-2,2Z" stroke-linejoin="round" stroke-linecap="round"></path>
+          <path d="M7 3L7 8L15 8" stroke-linejoin="round" stroke-linecap="round"></path>
+          <path d="M17 20L17 13L7 13L7 20" stroke-linejoin="round" stroke-linecap="round"></path>
+        </svg>
+        <span>Добавить в базу</span>
+      </button>
     </div>
   `;
   content.appendChild(formBox);
