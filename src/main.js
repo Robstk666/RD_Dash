@@ -113,6 +113,20 @@ const SECTION_COLORS = {
   trash: 'red',
 };
 
+const ICONS = {
+  training: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+  filming: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`,
+  offer: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+  settings: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`,
+  trash: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
+  theory: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+  gym: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 5v14"/><path d="M18 5v14"/><path d="M2 9v6"/><path d="M22 9v6"/><path d="M2 15h4"/><path d="M18 15h4"/><path d="M2 9h4"/><path d="M18 9h4"/><path d="M6 12h12"/></svg>`,
+  outdoor: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 13h4l-3 8h6v3h4v-3h6l-3-8h4z"/></svg>`,
+  pkt: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M2 12h20"/></svg>`,
+  copy: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
+  check: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+};
+
 // Bottom nav states that show the nav bar
 const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'filming', 'offer', 'settings', 'trash'];
 
@@ -157,10 +171,10 @@ function renderBottomNav() {
   nav.id = 'bottom-nav';
 
   const navItems = [
-    { key: 'training', icon: '⚡', label: 'Тренировки', color: '',         state: 'workouts_menu' },
-    { key: 'filming',  icon: '🎥', label: 'Съёмки',     color: 'cyan',     state: 'filming' },
-    { key: 'offer',    icon: '💼', label: 'Оффер',       color: 'magenta',  state: 'offer' },
-    { key: 'settings', icon: '⚙️', label: 'Настройки', color: 'white',   state: 'settings' },
+    { key: 'training', icon: ICONS.training, label: 'Тренировки', color: '',         state: 'workouts_menu' },
+    { key: 'filming',  icon: ICONS.filming,  label: 'Съёмки',     color: 'cyan',     state: 'filming' },
+    { key: 'offer',    icon: ICONS.offer,    label: 'Оффер',       color: 'magenta',  state: 'offer' },
+    { key: 'settings', icon: ICONS.settings, label: 'Настройки', color: 'white',   state: 'settings' },
   ];
 
   navItems.forEach(({ key, icon, label, color, state }) => {
@@ -322,10 +336,10 @@ function renderWorkoutsMenu() {
   nav.style.padding = '0';
 
   const items = [
-    { icon: '📚', label: 'База знаний', title: 'Теория и ЦНС', state: 'theory' },
-    { icon: '🔥', label: 'Зал', title: 'Программа тренировок', state: 'training' },
-    { icon: '🌲', label: 'Улица', title: 'Тренировки без зала', state: 'outdoor_training' },
-    { icon: '💊', label: 'Восстановление', title: 'ПКТ', state: 'pkt' },
+    { icon: ICONS.theory,  label: 'База знаний', title: 'Теория и ЦНС', state: 'theory' },
+    { icon: ICONS.gym,     label: 'Зал',         title: 'Программа тренировок', state: 'training' },
+    { icon: ICONS.outdoor, label: 'Улица',       title: 'Тренировки без зала', state: 'outdoor_training' },
+    { icon: ICONS.pkt,     label: 'Восстановление', title: 'ПКТ',          state: 'pkt' },
   ];
 
   items.forEach(({ icon, label, title, state }) => {
@@ -518,7 +532,7 @@ function renderSettings() {
         <label class="radio-label"><input type="radio" name="task-section" value="offer"> <span>Оффер</span></label>
       </div>
       
-      <button id="task-submit" class="primary-btn">Добавить в базу</button>
+      <button id="task-submit" class="primary-btn btn-lightning"><span>Добавить в базу</span></button>
     </div>
   `;
   content.appendChild(formBox);
@@ -526,13 +540,8 @@ function renderSettings() {
   const archiveBox = document.createElement('div');
   archiveBox.style.marginTop = '40px';
   archiveBox.innerHTML = `
-    <button id="btn-goto-trash" class="menu-card white" style="background:rgba(255,100,100,0.05); border-color:var(--red);">
-      <div class="menu-card-icon" style="color:var(--red)">🗑️</div>
-      <div class="menu-card-body">
-        <div class="menu-card-label" style="color:var(--red)">Корзина БД</div>
-        <div class="menu-card-title">Удалённые элементы</div>
-      </div>
-      <span class="menu-card-arrow" style="color:var(--red)">›</span>
+    <button id="btn-goto-trash" class="primary-btn" style="background:rgba(255,80,80,0.1); color:var(--red); border:1px solid rgba(255,80,80,0.25); display:flex; align-items:center; justify-content:center; gap:12px;">
+      ${ICONS.trash} <span>УДАЛЁННЫЕ ЭЛЕМЕНТЫ</span>
     </button>
   `;
   content.appendChild(archiveBox);
@@ -547,18 +556,21 @@ function renderSettings() {
     if (!title) return;
     
     const btn = document.getElementById('task-submit');
-    const oldText = btn.innerHTML;
-    btn.innerHTML = 'Сохранение...';
-    btn.style.opacity = '0.5';
+    const span = btn.querySelector('span');
+    const oldText = span.innerHTML;
+    span.innerHTML = 'Сохранение...';
+    btn.classList.add('striking');
 
     await addCustomTaskDB({ title, content: desc || ' ', section });
     
-    btn.innerHTML = '✔ Добавлено!';
-    btn.style.opacity = '1';
+    span.innerHTML = '✔ Добавлено!';
     document.getElementById('task-title').value = '';
     document.getElementById('task-desc').value = '';
     
-    setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+    setTimeout(() => { 
+      span.innerHTML = oldText; 
+      btn.classList.remove('striking');
+    }, 2000);
   };
   
   document.getElementById('btn-goto-trash').onclick = () => { currentState = 'trash'; render(); };
@@ -589,13 +601,13 @@ function renderOffer() {
     const btn = document.createElement('button');
     btn.className = 'copy-btn';
     btn.innerHTML = `
-      <div class="copy-btn-icon">📄</div>
+      <div class="copy-btn-icon">${ICONS.copy}</div>
       <span>${letter.title}</span>
     `;
     btn.onclick = () => {
       navigator.clipboard.writeText(letter.content).then(() => {
         const orig = btn.innerHTML;
-        btn.innerHTML = `<div class="copy-btn-icon">✅</div><span>Скопировано!</span>`;
+        btn.innerHTML = `<div class="copy-btn-icon" style="color:var(--lime);">${ICONS.check}</div><span>Скопировано!</span>`;
         btn.style.borderColor = 'rgba(204,255,0,0.4)';
         setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; }, 2000);
       });

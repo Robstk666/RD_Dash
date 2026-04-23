@@ -1066,6 +1066,53 @@ textarea.glass-input {
 
 .primary-btn:active { transform: scale(0.97); }
 
+/* ─── LIGHTNING BTN ANIMATION ─────────── */
+.btn-lightning {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1);
+  z-index: 1; /* relative context for pseudo element */
+}
+.btn-lightning > span {
+  position: relative;
+  z-index: 2; /* keep text above the strike */
+}
+
+@keyframes flashStrike {
+  0%   { background-color: var(--fg-high); color: var(--bg-core); box-shadow: 0 0 0px transparent; }
+  5%   { background-color: #fff; color: #000; box-shadow: 0 0 80px #fff, inset 0 0 40px #fff; }
+  10%  { background-color: var(--fg-high); color: var(--bg-core); box-shadow: 0 0 0px transparent; }
+  15%  { background-color: #fff; color: #000; box-shadow: 0 0 100px #fff; }
+  35%  { background-color: var(--fg-high); color: var(--bg-core); }
+  60%  { background-color: var(--lime); color: #000; box-shadow: 0 0 30px var(--lime); border-color: var(--lime); }
+  100% { background-color: var(--lime); color: #000; box-shadow: 0 0 0px transparent; border-color: var(--lime); }
+}
+
+.btn-lightning.striking {
+  animation: flashStrike 0.8s ease-out forwards;
+}
+
+.btn-lightning::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+  transform: skewX(-20deg);
+  z-index: 0;
+}
+
+.btn-lightning.striking::after {
+  animation: lightningBolt 0.5s ease-out forwards;
+}
+
+@keyframes lightningBolt {
+  0%   { left: -100%; }
+  15%  { left: 200%; }
+  100% { left: 200%; }
+}
+
 /* ─── MOBILE RESPONSIVE ───────────────── */
 @media (max-width: 400px) {
   .hud-title { font-size: 28px; }
