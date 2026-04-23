@@ -319,8 +319,8 @@ function renderMenu() {
 
 // ─── WORKOUTS HOME (Training section home) ────────────────────────
 function renderWorkoutsMenu() {
-  // No back button — this IS the Training home screen
-  renderTopBar('', null, '', true); // showLogo=true
+  // Title instead of logo in top bar
+  renderTopBar('ТРЕНИРОВКИ', null, '', false);
 
   // Background watermark is now global in render()
   const content = document.createElement('div');
@@ -479,7 +479,7 @@ function renderTextCards(title, data, backState, accentColor = 'lime') {
 
 // ─── FILMING SECTION ────────────────────────────
 function renderFilming() {
-  renderTopBar('', null, 'cyan', true); // logo, no back
+  renderTopBar('СЪЁМКИ', null, 'cyan', false);
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -606,7 +606,7 @@ function renderSettings() {
 
 // ─── OFFER SECTION ──────────────────────────────
 function renderOffer() {
-  renderTopBar('', null, 'magenta', true); // logo, no back
+  renderTopBar('ОФФЕР', null, 'magenta', false);
 
   const content = document.createElement('div');
   content.className = 'screen-content';
