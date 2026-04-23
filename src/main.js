@@ -141,6 +141,15 @@ function render() {
 
   renderBottomNav(); // always after innerHTML clear, before content
 
+  // ✅ Global Background watermark logo — visible on all tabs
+  if (currentState !== 'splash') {
+    const bgLogo = document.createElement('img');
+    bgLogo.src = '/logo.png';
+    bgLogo.alt = '';
+    bgLogo.className = 'home-bg-logo';
+    document.body.appendChild(bgLogo);
+  }
+
   if (currentState === 'splash')                renderSplash();
   else if (currentState === 'workouts_menu')    renderWorkoutsMenu();
   else if (currentState === 'theory')           renderTextCards('Биомеханика и ЦНС', theoryData, 'workouts_menu', 'lime');
@@ -313,13 +322,7 @@ function renderWorkoutsMenu() {
   // No back button — this IS the Training home screen
   renderTopBar('', null, '', true); // showLogo=true
 
-  // ✅ Background watermark logo — fixed, behind everything
-  const bgLogo = document.createElement('img');
-  bgLogo.src = '/logo.png';
-  bgLogo.alt = '';
-  bgLogo.className = 'home-bg-logo';
-  document.body.appendChild(bgLogo);
-
+  // Background watermark is now global in render()
   const content = document.createElement('div');
   content.className = 'screen-content';
 

@@ -253,7 +253,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   transform: translate(-50%, -50%);
   width: min(90vw, 440px);
   height: auto;
-  opacity: 0.05;
+  opacity: 0.15;
   pointer-events: none;
   z-index: 0;
   filter: invert(1);
