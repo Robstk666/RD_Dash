@@ -598,7 +598,6 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   justify-content: center;
   gap: 3px;
   padding: 8px 16px;
-  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease-out;
   color: rgba(255,255,255,0.4);
@@ -606,6 +605,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   border-bottom: 2px solid transparent;
   background: transparent;
   min-width: 68px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-item:hover { color: #fff; }
