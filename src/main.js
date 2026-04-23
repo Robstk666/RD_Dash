@@ -1,17 +1,103 @@
 import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData } from './data.js';
 
+// ─── Supabase DB ─────────────────────────────────
+const SUPABASE_URL = 'https://zibxszcsvltsvuqxlcrq.supabase.co/rest/v1/custom_tasks';
+const SUPABASE_KEY = 'sb_publishable_ozjFEGGNNcslDyZws66g3A_TBf4A9ml';
+
+let customTasks = [];
+
+async function fetchCustomTasks() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}?select=*&order=created_at.desc`, {
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    if (res.ok) customTasks = await res.json();
+  } catch (e) {
+    console.error('Failed to fetch from DB', e);
+  }
+}
+
+async function addCustomTaskDB(task) {
+  try {
+    await fetch(SUPABASE_URL, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(task)
+    });
+    await fetchCustomTasks();
+  } catch (e) { console.error('Add failed', e); }
+}
+
+async function markDeletedCustomTaskDB(id) {
+  try {
+    await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ is_deleted: true })
+    });
+    await fetchCustomTasks();
+  } catch (e) { console.error('Delete failed', e); }
+}
+
+async function restoreCustomTaskDB(id) {
+  try {
+    await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ is_deleted: false })
+    });
+    await fetchCustomTasks();
+  } catch (e) { console.error('Restore failed', e); }
+}
+
+async function hardDeleteCustomTaskDB(id) {
+  try {
+    await fetch(`${SUPABASE_URL}?id=eq.${id}`, {
+      method: 'DELETE',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+    });
+    await fetchCustomTasks();
+  } catch (e) { console.error('Hard delete failed', e); }
+}
+
 // ─── localStorage Utils ──────────────────────────
 function getDeletedItems() {
   return JSON.parse(localStorage.getItem('deletedItems') || '[]');
 }
-function deleteItem(id) {
-  const items = getDeletedItems();
-  if (!items.includes(id)) { items.push(id); localStorage.setItem('deletedItems', JSON.stringify(items)); }
+
+async function deleteItem(id) {
+  if (id.includes('-')) {
+    const t = customTasks.find(x => x.id === id);
+    if (t) { t.is_deleted = true; render(); }
+    await markDeletedCustomTaskDB(id);
+  } else {
+    const items = getDeletedItems();
+    if (!items.includes(id)) { items.push(id); localStorage.setItem('deletedItems', JSON.stringify(items)); }
+  }
+  render();
 }
-function restoreItem(id) {
-  const items = getDeletedItems().filter(i => i !== id);
-  localStorage.setItem('deletedItems', JSON.stringify(items));
+
+async function restoreItem(id) {
+  if (id.includes('-')) {
+    const t = customTasks.find(x => x.id === id);
+    if (t) { t.is_deleted = false; render(); }
+    await restoreCustomTaskDB(id);
+  } else {
+    const items = getDeletedItems().filter(i => i !== id);
+    localStorage.setItem('deletedItems', JSON.stringify(items));
+  }
+  render();
 }
+
+async function forceDeleteItem(id) {
+  if (id.includes('-')) {
+    customTasks = customTasks.filter(x => x.id !== id);
+    render();
+    await hardDeleteCustomTaskDB(id);
+    render();
+  }
+}
+
 
 // ─── App State ─────────────────────────────────
 const app = document.getElementById('app');
@@ -23,15 +109,16 @@ const SECTION_COLORS = {
   training: 'lime', outdoor_training: 'lime', pkt: 'lime',
   filming: 'cyan',
   offer: 'magenta',
+  settings: 'white', // Settings aesthetic color
   trash: 'red',
 };
 
 // Bottom nav states that show the nav bar
-const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'filming', 'offer', 'trash'];
+const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'filming', 'offer', 'settings', 'trash'];
 
 function render() {
   const color = SECTION_COLORS[currentState] || 'lime';
-  document.body.className = `section-${color === 'lime' ? 'training' : color === 'cyan' ? 'filming' : color === 'magenta' ? 'offer' : 'trash'}`;
+  document.body.className = `section-${color === 'lime' ? 'training' : color === 'cyan' ? 'filming' : color === 'magenta' ? 'offer' : color === 'white' ? 'settings' : 'trash'}`;
 
   app.innerHTML = '';
 
@@ -48,6 +135,7 @@ function render() {
   else if (currentState === 'pkt')              renderTextCards('ПКТ', pktData, 'workouts_menu', 'lime');
   else if (currentState === 'filming')          renderFilming();
   else if (currentState === 'offer')            renderOffer();
+  else if (currentState === 'settings')         renderSettings();
   else if (currentState === 'trash')            renderTrash();
 }
 
@@ -72,7 +160,7 @@ function renderBottomNav() {
     { key: 'training', icon: '⚡', label: 'Тренировки', color: '',         state: 'workouts_menu' },
     { key: 'filming',  icon: '🎥', label: 'Съёмки',     color: 'cyan',     state: 'filming' },
     { key: 'offer',    icon: '💼', label: 'Оффер',       color: 'magenta',  state: 'offer' },
-    { key: 'trash',    icon: '🗑️', label: 'Архив',      color: 'red',      state: 'trash' },
+    { key: 'settings', icon: '⚙️', label: 'Настройки', color: 'white',   state: 'settings' },
   ];
 
   navItems.forEach(({ key, icon, label, color, state }) => {
@@ -256,7 +344,60 @@ function renderWorkoutsMenu() {
   });
 
   content.appendChild(nav);
+
+  // ✅ Add Custom Tasks
+  const activeTrainingTasks = customTasks.filter(t => t.section === 'training' && !t.is_deleted);
+  if (activeTrainingTasks.length > 0) {
+    const header = document.createElement('h2');
+    header.className = 'hud-title';
+    header.style.fontSize = '20px';
+    header.style.marginTop = '40px';
+    header.style.marginBottom = '16px';
+    header.textContent = 'МОИ ЗАДАЧИ';
+    content.appendChild(header);
+
+    const taskList = document.createElement('div');
+    taskList.className = 'cards-list';
+    activeTrainingTasks.forEach(item => {
+      taskList.appendChild(createCollapseCard(item, 'lime'));
+    });
+    content.appendChild(taskList);
+  }
+
   app.appendChild(content);
+}
+
+// ─── UTILS ──────────────────────────────────────
+function createCollapseCard(item, accentColor) {
+  const card = document.createElement('div');
+  card.className = `collapse-card ${accentColor}`;
+
+  const header = document.createElement('div');
+  header.className = 'collapse-header';
+  header.innerHTML = `
+    <span class="collapse-title">${item.title}</span>
+    <div class="collapse-actions">
+      <button class="delete-btn" title="Удалить">✕</button>
+      <span class="collapse-chevron">▾</span>
+    </div>
+  `;
+  header.querySelector('.delete-btn').onclick = (e) => {
+    e.stopPropagation(); deleteItem(String(item.id));
+  };
+
+  const body = document.createElement('div');
+  body.className = 'collapse-body';
+  body.innerHTML = `<p>${item.content.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</p>`;
+
+  header.onclick = () => {
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.collapse-card').forEach(c => c.classList.remove('active'));
+    if (!isActive) card.classList.add('active');
+  };
+
+  card.appendChild(header);
+  card.appendChild(body);
+  return card;
 }
 
 
@@ -338,42 +479,89 @@ function renderFilming() {
   list.className = 'cards-list';
 
   const deleted = getDeletedItems();
-  filmingData
-    .filter(item => !deleted.includes(item.id))
-    .forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'collapse-card cyan';
-
-      const header = document.createElement('div');
-      header.className = 'collapse-header';
-      header.innerHTML = `
-        <span class="collapse-title">${item.title}</span>
-        <div class="collapse-actions">
-          <button class="delete-btn" onclick="event.stopPropagation()">✕</button>
-          <span class="collapse-chevron">▾</span>
-        </div>
-      `;
-      header.querySelector('.delete-btn').onclick = (e) => {
-        e.stopPropagation(); deleteItem(item.id); render();
-      };
-
-      const body = document.createElement('div');
-      body.className = 'collapse-body';
-      body.innerHTML = `<p>${item.content.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</p>`;
-
-      header.onclick = () => {
-        const isActive = card.classList.contains('active');
-        document.querySelectorAll('.collapse-card').forEach(c => c.classList.remove('active'));
-        if (!isActive) card.classList.add('active');
-      };
-
-      card.appendChild(header);
-      card.appendChild(body);
-      list.appendChild(card);
-    });
+  const baseData = filmingData.filter(item => !deleted.includes(String(item.id)));
+  const cData = customTasks.filter(item => item.section === 'filming' && !item.is_deleted);
+  
+  [...baseData, ...cData].forEach(item => {
+    list.appendChild(createCollapseCard(item, 'cyan'));
+  });
 
   content.appendChild(list);
   app.appendChild(content);
+}
+
+// ─── SETTINGS SECTION ───────────────────────────
+function renderSettings() {
+  renderTopBar('Настройки', null, 'white', false);
+
+  const content = document.createElement('div');
+  content.className = 'screen-content';
+
+  const hud = document.createElement('div');
+  hud.className = 'section-hud';
+  hud.innerHTML = `
+    <div class="hud-chip white"><span class="hud-dot" style="background:#fff"></span> Консоль управления</div>
+    <h1 class="hud-title">Добавить<br>Задачу</h1>
+  `;
+  content.appendChild(hud);
+
+  const formBox = document.createElement('div');
+  formBox.className = 'settings-form';
+  formBox.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:16px; margin-bottom: 24px;">
+      <input type="text" id="task-title" placeholder="Заголовок задачи" autocomplete="off" class="glass-input">
+      <textarea id="task-desc" placeholder="Описание / детали" rows="3" class="glass-input"></textarea>
+      
+      <div class="task-radios">
+        <label class="radio-label"><input type="radio" name="task-section" value="training" checked> <span>Тренировки</span></label>
+        <label class="radio-label"><input type="radio" name="task-section" value="filming"> <span>Съёмки</span></label>
+        <label class="radio-label"><input type="radio" name="task-section" value="offer"> <span>Оффер</span></label>
+      </div>
+      
+      <button id="task-submit" class="primary-btn">Добавить в базу</button>
+    </div>
+  `;
+  content.appendChild(formBox);
+
+  const archiveBox = document.createElement('div');
+  archiveBox.style.marginTop = '40px';
+  archiveBox.innerHTML = `
+    <button id="btn-goto-trash" class="menu-card white" style="background:rgba(255,100,100,0.05); border-color:var(--red);">
+      <div class="menu-card-icon" style="color:var(--red)">🗑️</div>
+      <div class="menu-card-body">
+        <div class="menu-card-label" style="color:var(--red)">Корзина БД</div>
+        <div class="menu-card-title">Удалённые элементы</div>
+      </div>
+      <span class="menu-card-arrow" style="color:var(--red)">›</span>
+    </button>
+  `;
+  content.appendChild(archiveBox);
+
+  app.appendChild(content);
+
+  document.getElementById('task-submit').onclick = async () => {
+    const title = document.getElementById('task-title').value.trim();
+    const desc = document.getElementById('task-desc').value.trim();
+    const section = document.querySelector('input[name="task-section"]:checked').value;
+    
+    if (!title) return;
+    
+    const btn = document.getElementById('task-submit');
+    const oldText = btn.innerHTML;
+    btn.innerHTML = 'Сохранение...';
+    btn.style.opacity = '0.5';
+
+    await addCustomTaskDB({ title, content: desc || ' ', section });
+    
+    btn.innerHTML = '✔ Добавлено!';
+    btn.style.opacity = '1';
+    document.getElementById('task-title').value = '';
+    document.getElementById('task-desc').value = '';
+    
+    setTimeout(() => { btn.innerHTML = oldText; }, 2000);
+  };
+  
+  document.getElementById('btn-goto-trash').onclick = () => { currentState = 'trash'; render(); };
 }
 
 // ─── OFFER SECTION ──────────────────────────────
@@ -425,39 +613,12 @@ function renderOffer() {
   const list = document.createElement('div');
   list.className = 'cards-list';
 
-  offerData
-    .filter(item => !deleted.includes(item.id))
-    .forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'collapse-card magenta';
-
-      const header = document.createElement('div');
-      header.className = 'collapse-header';
-      header.innerHTML = `
-        <span class="collapse-title">${item.title}</span>
-        <div class="collapse-actions">
-          <button class="delete-btn" onclick="event.stopPropagation()">✕</button>
-          <span class="collapse-chevron">▾</span>
-        </div>
-      `;
-      header.querySelector('.delete-btn').onclick = (e) => {
-        e.stopPropagation(); deleteItem(item.id); render();
-      };
-
-      const body = document.createElement('div');
-      body.className = 'collapse-body';
-      body.innerHTML = `<p>${item.content.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</p>`;
-
-      header.onclick = () => {
-        const isActive = card.classList.contains('active');
-        document.querySelectorAll('.collapse-card').forEach(c => c.classList.remove('active'));
-        if (!isActive) card.classList.add('active');
-      };
-
-      card.appendChild(header);
-      card.appendChild(body);
-      list.appendChild(card);
-    });
+  const baseData = offerData.filter(item => !deleted.includes(String(item.id)));
+  const cData = customTasks.filter(item => item.section === 'offer' && !item.is_deleted);
+  
+  [...baseData, ...cData].forEach(item => {
+    list.appendChild(createCollapseCard(item, 'magenta'));
+  });
 
   content.appendChild(list);
   app.appendChild(content);
@@ -465,7 +626,7 @@ function renderOffer() {
 
 // ─── TRASH SECTION ──────────────────────────────
 function renderTrash() {
-  renderTopBar('', null, '', true); // logo, no back
+  renderTopBar('Корзина', () => { currentState = 'settings'; render(); }, 'red', false); 
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -480,8 +641,9 @@ function renderTrash() {
   content.appendChild(hud);
 
   const deleted = getDeletedItems();
-  const allData = [...filmingData, ...offerData];
-  const items = allData.filter(d => deleted.includes(d.id));
+  const baseAll = [...filmingData, ...offerData].filter(d => deleted.includes(String(d.id)));
+  const customAll = customTasks.filter(t => t.is_deleted);
+  const items = [...baseAll, ...customAll];
 
   if (items.length === 0) {
     const empty = document.createElement('div');
@@ -503,9 +665,23 @@ function renderTrash() {
       const restoreBtn = document.createElement('button');
       restoreBtn.className = 'restore-btn';
       restoreBtn.textContent = '↩ Восстановить';
-      restoreBtn.onclick = () => { restoreItem(item.id); render(); };
-      
+      restoreBtn.onclick = () => { restoreItem(String(item.id)); };
       actions.appendChild(restoreBtn);
+
+      if (String(item.id).includes('-')) {
+        // Allow hard delete for supabase items to save space
+        const rmBtn = document.createElement('button');
+        rmBtn.className = 'delete-btn';
+        rmBtn.style.background = 'rgba(255,0,0,0.1)';
+        rmBtn.style.color = 'var(--red)';
+        rmBtn.style.marginLeft = '8px';
+        rmBtn.textContent = '✕ Навсегда';
+        rmBtn.onclick = () => {
+          if(confirm('Удалить навсегда из базы?')) forceDeleteItem(String(item.id));
+        };
+        actions.appendChild(rmBtn);
+      }
+      
       card.appendChild(title);
       card.appendChild(actions);
       content.appendChild(card);
@@ -619,4 +795,5 @@ function renderTraining(scheduleData, pageTitle) {
 }
 
 // ─── Start ─────────────────────────────────────
+fetchCustomTasks();
 render();
