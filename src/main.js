@@ -1,4 +1,4 @@
-import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData } from './data.js';
+import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData } from './data.js';
 
 // ─── Supabase DB ─────────────────────────────────
 const SUPABASE_URL = 'https://zibxszcsvltsvuqxlcrq.supabase.co/rest/v1/custom_tasks';
@@ -124,11 +124,11 @@ const ICONS = {
   outdoor: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 13h4l-3 8h6v3h4v-3h6l-3-8h4z"/></svg>`,
   pkt: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M2 12h20"/></svg>`,
   copy: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
-  check: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`
+  check: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
+  derma: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
 };
 
-// Bottom nav states that show the nav bar
-const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'filming', 'offer', 'settings', 'trash'];
+const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'settings', 'trash'];
 
 function render() {
   const color = SECTION_COLORS[currentState] || 'lime';
@@ -156,6 +156,7 @@ function render() {
   else if (currentState === 'training')         renderTraining(trainingSchedule, 'Программа (в зале)');
   else if (currentState === 'outdoor_training') renderTraining(outdoorTrainingSchedule, 'Тренировки без зала');
   else if (currentState === 'pkt')              renderTextCards('ПКТ', pktData, 'workouts_menu', 'lime');
+  else if (currentState === 'derma')            renderTextCards('ДЕРМА', dermaData, 'workouts_menu', 'lime');
   else if (currentState === 'filming')          renderFilming();
   else if (currentState === 'offer')            renderOffer();
   else if (currentState === 'settings')         renderSettings();
@@ -171,7 +172,7 @@ function renderBottomNav() {
   if (currentState === 'splash') return;
 
   const getActiveSection = (s) => {
-    if (['workouts_menu','theory','training','outdoor_training','pkt'].includes(s)) return 'training';
+    if (['workouts_menu','theory','training','outdoor_training','pkt','derma'].includes(s)) return 'training';
     return s;
   };
   const active = getActiveSection(currentState);
@@ -343,6 +344,7 @@ function renderWorkoutsMenu() {
     { icon: ICONS.gym,     label: 'Зал',         title: 'Программа тренировок', state: 'training' },
     { icon: ICONS.outdoor, label: 'Улица',       title: 'Тренировки без зала', state: 'outdoor_training' },
     { icon: ICONS.pkt,     label: 'Восстановление', title: 'ПКТ',          state: 'pkt' },
+    { icon: ICONS.derma,   label: 'Дерма',         title: 'Уход за лицом',    state: 'derma' },
   ];
 
   items.forEach(({ icon, label, title, state }) => {

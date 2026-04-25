@@ -580,16 +580,15 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   left: 0;
   right: 0;
   z-index: 200;
-  background: #000;
-  backdrop-filter: blur(24px);
-  border-top: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  padding: 10px 10px env(safe-area-inset-bottom, 12px);
-  height: var(--bottom-nav-h);
-  width: 100%;
+  padding: 8px 10px calc(env(safe-area-inset-bottom, 12px) + 8px);
+  height: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .nav-item {
@@ -598,41 +597,47 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 4px;
+  gap: 4px;
+  padding: 10px 16px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  color: rgba(255,255,255,0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: rgba(255, 255, 255, 0.35);
   border: none;
   background: transparent;
-  min-width: 72px;
+  min-width: 80px;
   -webkit-tap-highlight-color: transparent;
+  border-radius: 20px;
 }
 
-.nav-item:hover { color: rgba(255,255,255,0.7); }
-
+/* Active background bubble */
 .nav-item.active {
   color: var(--lime);
+  background: rgba(204, 255, 0, 0.08); /* Faded lime bubble */
 }
 
-/* Кастомная линия-индикатор как на скриншоте (выделение без "прыжка" кнопки) */
+/* Specific colors for bubbles */
+.nav-item.active.cyan    { color: var(--cyan); background: rgba(0, 255, 242, 0.08); }
+.nav-item.active.magenta { color: var(--magenta); background: rgba(255, 0, 255, 0.08); }
+.nav-item.active.white   { color: #fff; background: rgba(255, 255, 255, 0.08); }
+
+/* The curved underline indicator from the screenshot */
 .nav-item::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 50%;
   width: 0%;
   height: 2px;
   background: currentColor;
   transform: translateX(-50%);
-  transition: all 0.3s ease;
-  filter: blur(0px);
-  border-radius: 4px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 10px;
 }
 
 .nav-item.active::after {
-  width: 60%;
-  box-shadow: 0 0 10px currentColor;
+  width: 40px;
+  bottom: 4px;
+  box-shadow: 0 0 12px currentColor;
 }
 
 .nav-item.active.cyan    { color: var(--cyan); }
