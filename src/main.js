@@ -151,29 +151,28 @@ async function transitionTo(newState, direction = 'left') {
   if (isTransitioning) return;
   isTransitioning = true;
 
-  const exitX = direction === 'left' ? '-100%' : '100%';
-  const enterX = direction === 'left' ? '100%' : '-100%';
+  const screenW = window.innerWidth;
+  const exitX  = direction === 'left' ? -screenW : screenW;
+  const enterX = direction === 'left' ?  screenW : -screenW;
 
-  // Exit current
+  // Exit fast from wherever finger left it
   await gsap.to(app, {
     x: exitX,
-    opacity: 0,
-    duration: 0.22,
+    duration: 0.15,
     ease: 'power2.in',
     overwrite: true,
   });
 
   currentState = newState;
-  gsap.set(app, { x: enterX, opacity: 0 });
+  gsap.set(app, { x: enterX, opacity: 1 });
   render();
   syncThemeColor(newState);
   haptic(6);
 
-  // Enter new
+  // Enter fast snap in
   await gsap.to(app, {
     x: 0,
-    opacity: 1,
-    duration: 0.28,
+    duration: 0.18,
     ease: 'power2.out',
     overwrite: true,
   });
@@ -340,7 +339,7 @@ const SECTION_ORDER = ['workouts_menu', 'filming', 'offer', 'settings'];
 function initSwipeNavigator() {
   createSwipeEdges();
   let startX = 0, startY = 0, moved = false;
-  const THRESHOLD = 65;
+  const THRESHOLD = 50;
   const ANGLE_LIMIT = 40;
 
   document.addEventListener('touchstart', (e) => {
@@ -362,25 +361,29 @@ function initSwipeNavigator() {
       moved = true;
       const edges = document.querySelectorAll('.swipe-edge-indicator');
       edges.forEach(e => e.classList.add('active'));
-      // Follow finger slightly
-      gsap.set(app, { x: dx * 0.15 });
+      // 1:1 follow finger - instant, no lag
+      gsap.set(app, { x: dx });
     }
   }, { passive: true });
 
   document.addEventListener('touchend', (e) => {
     const edges = document.querySelectorAll('.swipe-edge-indicator');
     edges.forEach(e => e.classList.remove('active'));
-    gsap.set(app, { x: 0 });
-
-    if (!moved || !SECTION_ORDER.includes(currentState)) return;
+    if (!moved || !SECTION_ORDER.includes(currentState)) {
+      gsap.to(app, { x: 0, duration: 0.2, ease: 'power2.out' });
+      return;
+    }
     const dx = e.changedTouches[0].clientX - startX;
-    if (Math.abs(dx) < THRESHOLD) return;
-
     const idx = SECTION_ORDER.indexOf(currentState);
+    moved = false;
+
     if (dx < -THRESHOLD && idx < SECTION_ORDER.length - 1) {
       transitionTo(SECTION_ORDER[idx + 1], 'left');
     } else if (dx > THRESHOLD && idx > 0) {
       transitionTo(SECTION_ORDER[idx - 1], 'right');
+    } else {
+      // Spring back
+      gsap.to(app, { x: 0, duration: 0.25, ease: 'back.out(2)' });
     }
   }, { passive: true });
 }
