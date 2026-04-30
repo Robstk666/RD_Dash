@@ -1,4 +1,6 @@
+import gsap from 'gsap';
 import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData } from './data.js';
+
 
 // ─── Supabase DB ─────────────────────────────────
 const SUPABASE_URL = 'https://zibxszcsvltsvuqxlcrq.supabase.co/rest/v1/custom_tasks';
@@ -103,6 +105,288 @@ async function forceDeleteItem(id) {
 const app = document.getElementById('app');
 let currentState = 'splash';
 
+// ─────────────────────────────────────────────────────────────────
+// MOBILE UTILITIES
+// ─────────────────────────────────────────────────────────────────
+
+// ─── Haptic Feedback ─────────────────────────────
+function haptic(pattern = 8) {
+  if (navigator.vibrate) navigator.vibrate(pattern);
+}
+
+// ─── Meta Theme-Color Sync ────────────────────────
+function syncThemeColor(state) {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) return;
+  const map = {
+    filming: '#001a1e',
+    offer: '#1a001e',
+    settings: '#0d0d0d',
+    trash: '#1a0000',
+  };
+  meta.content = map[state] || '#050505';
+}
+
+// ─── Ripple Effect ────────────────────────────────
+function addRipple(el, colorClass = 'ripple-lime') {
+  el.addEventListener('touchstart', (e) => {
+    const touch = e.touches[0];
+    const rect = el.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+
+    const wave = document.createElement('span');
+    wave.className = `ripple-wave ${colorClass}`;
+    wave.style.left = x + 'px';
+    wave.style.top  = y + 'px';
+    el.appendChild(wave);
+    wave.addEventListener('animationend', () => wave.remove());
+  }, { passive: true });
+}
+
+// ─── GSAP Page Transition ─────────────────────────
+let isTransitioning = false;
+
+async function transitionTo(newState, direction = 'left') {
+  if (isTransitioning) return;
+  isTransitioning = true;
+
+  const exitX = direction === 'left' ? '-100%' : '100%';
+  const enterX = direction === 'left' ? '100%' : '-100%';
+
+  // Exit current
+  await gsap.to(app, {
+    x: exitX,
+    opacity: 0,
+    duration: 0.22,
+    ease: 'power2.in',
+    overwrite: true,
+  });
+
+  currentState = newState;
+  gsap.set(app, { x: enterX, opacity: 0 });
+  render();
+  syncThemeColor(newState);
+  haptic(6);
+
+  // Enter new
+  await gsap.to(app, {
+    x: 0,
+    opacity: 1,
+    duration: 0.28,
+    ease: 'power2.out',
+    overwrite: true,
+  });
+
+  isTransitioning = false;
+}
+
+// ─── Stagger Cards with GSAP ──────────────────────
+function staggerCards(selector) {
+  const els = document.querySelectorAll(selector);
+  if (!els.length) return;
+  gsap.fromTo(els,
+    { y: 22, opacity: 0 },
+    { y: 0, opacity: 1, duration: 0.38, stagger: 0.07, ease: 'power2.out' }
+  );
+}
+
+// ─── Bottom Sheet ─────────────────────────────────
+let sheetBackdrop = null;
+let sheetEl = null;
+let sheetDragStartY = 0;
+let sheetDragCurrentY = 0;
+
+function createBottomSheetDOM() {
+  // Backdrop
+  sheetBackdrop = document.createElement('div');
+  sheetBackdrop.className = 'sheet-backdrop';
+  document.body.appendChild(sheetBackdrop);
+
+  // Sheet
+  sheetEl = document.createElement('div');
+  sheetEl.className = 'bottom-sheet';
+  sheetEl.innerHTML = `
+    <div class="sheet-handle-wrap" id="sheet-drag-handle">
+      <div class="sheet-handle"></div>
+    </div>
+    <div class="sheet-body" id="sheet-body-inner"></div>
+  `;
+  document.body.appendChild(sheetEl);
+
+  // Drag to dismiss
+  const handle = sheetEl.querySelector('#sheet-drag-handle');
+  handle.addEventListener('touchstart', (e) => {
+    sheetDragStartY = e.touches[0].clientY;
+    sheetEl.style.transition = 'none';
+  }, { passive: true });
+
+  handle.addEventListener('touchmove', (e) => {
+    sheetDragCurrentY = e.touches[0].clientY;
+    const delta = Math.max(0, sheetDragCurrentY - sheetDragStartY);
+    sheetEl.style.transform = `translateY(${delta}px)`;
+  }, { passive: true });
+
+  handle.addEventListener('touchend', () => {
+    const delta = sheetDragCurrentY - sheetDragStartY;
+    sheetEl.style.transition = '';
+    if (delta > sheetEl.offsetHeight * 0.35) {
+      closeBottomSheet();
+    } else {
+      sheetEl.style.transform = '';
+    }
+  });
+
+  // Backdrop tap = close
+  sheetBackdrop.addEventListener('click', closeBottomSheet);
+}
+
+function openBottomSheet(title, htmlContent, accentColor = 'lime') {
+  if (!sheetEl) createBottomSheetDOM();
+
+  const body = sheetEl.querySelector('#sheet-body-inner');
+  body.innerHTML = `
+    <div class="sheet-accent-bar ${accentColor}"></div>
+    <div class="sheet-title">${title}</div>
+    <div class="sheet-content">${htmlContent}</div>
+  `;
+
+  requestAnimationFrame(() => {
+    sheetBackdrop.classList.add('open');
+    sheetEl.classList.add('open');
+  });
+  haptic(8);
+}
+
+function closeBottomSheet() {
+  if (!sheetEl) return;
+  sheetEl.style.transform = '';
+  sheetEl.classList.remove('open');
+  sheetBackdrop.classList.remove('open');
+  haptic(5);
+}
+
+// ─── Pull-to-Refresh ──────────────────────────────
+let ptrEl = null;
+let ptrStartY = 0;
+let ptrDelta = 0;
+let ptrActive = false;
+
+function initPullToRefresh() {
+  if (ptrEl) return;
+  ptrEl = document.createElement('div');
+  ptrEl.id = 'ptr-indicator';
+  ptrEl.innerHTML = `<div class="ptr-arrow">↓</div>`;
+  document.body.appendChild(ptrEl);
+
+  document.addEventListener('touchstart', (e) => {
+    if (window.scrollY === 0) {
+      ptrStartY = e.touches[0].clientY;
+      ptrActive = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!ptrActive) return;
+    ptrDelta = e.touches[0].clientY - ptrStartY;
+    if (ptrDelta > 10 && window.scrollY === 0) {
+      ptrEl.classList.add('visible');
+      const arrow = ptrEl.querySelector('.ptr-arrow');
+      if (ptrDelta > 80) {
+        arrow.classList.add('ready');
+      } else {
+        arrow.classList.remove('ready');
+      }
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', async () => {
+    if (!ptrActive || ptrDelta < 80) {
+      ptrEl.classList.remove('visible');
+      ptrActive = false;
+      ptrDelta = 0;
+      return;
+    }
+    ptrActive = false;
+    ptrDelta = 0;
+    // Show spinner
+    ptrEl.innerHTML = `<div class="ptr-spinner"></div>`;
+    ptrEl.classList.add('visible', 'releasing');
+    haptic([10, 30, 10]);
+
+    await fetchCustomTasks();
+    render();
+
+    ptrEl.classList.remove('visible', 'releasing');
+    setTimeout(() => {
+      ptrEl.innerHTML = `<div class="ptr-arrow">↓</div>`;
+    }, 300);
+  }, { passive: true });
+}
+
+// ─── Swipe Edge Indicators ────────────────────────
+function createSwipeEdges() {
+  ['left','right'].forEach(side => {
+    if (document.querySelector(`.swipe-edge-indicator.${side}`)) return;
+    const el = document.createElement('div');
+    el.className = `swipe-edge-indicator ${side}`;
+    document.body.appendChild(el);
+  });
+}
+
+// ─── Section Swipe Navigator ──────────────────────
+const SECTION_ORDER = ['workouts_menu', 'filming', 'offer', 'settings'];
+
+function initSwipeNavigator() {
+  createSwipeEdges();
+  let startX = 0, startY = 0, moved = false;
+  const THRESHOLD = 65;
+  const ANGLE_LIMIT = 40;
+
+  document.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    moved = false;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!SECTION_ORDER.includes(currentState)) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    const angle = Math.abs(Math.atan2(dy, dx) * 180 / Math.PI);
+
+    // Only horizontal swipes (not vertical scroll)
+    if (angle > ANGLE_LIMIT && angle < 180 - ANGLE_LIMIT) return;
+
+    if (Math.abs(dx) > 20) {
+      moved = true;
+      const edges = document.querySelectorAll('.swipe-edge-indicator');
+      edges.forEach(e => e.classList.add('active'));
+      // Follow finger slightly
+      gsap.set(app, { x: dx * 0.15 });
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    const edges = document.querySelectorAll('.swipe-edge-indicator');
+    edges.forEach(e => e.classList.remove('active'));
+    gsap.set(app, { x: 0 });
+
+    if (!moved || !SECTION_ORDER.includes(currentState)) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) < THRESHOLD) return;
+
+    const idx = SECTION_ORDER.indexOf(currentState);
+    if (dx < -THRESHOLD && idx < SECTION_ORDER.length - 1) {
+      transitionTo(SECTION_ORDER[idx + 1], 'left');
+    } else if (dx > THRESHOLD && idx > 0) {
+      transitionTo(SECTION_ORDER[idx - 1], 'right');
+    }
+  }, { passive: true });
+}
+
+
+
 // Section → accent color mapping
 const SECTION_COLORS = {
   menu: 'lime', workouts_menu: 'lime', theory: 'lime',
@@ -138,6 +422,9 @@ function render() {
 
   // Clean up fixed elements appended to body
   document.querySelectorAll('.home-bg-logo').forEach(el => el.remove());
+
+  // Sync theme-color meta tag
+  syncThemeColor(currentState);
 
   renderBottomNav(); // always after innerHTML clear, before content
 
@@ -190,12 +477,20 @@ function renderBottomNav() {
   navItems.forEach(({ key, icon, label, color, state }) => {
     const isActive = active === key;
     const btn = document.createElement('button');
-    btn.className = `nav-item ${isActive ? 'active ' + (color || '') : ''}`;
+    btn.className = `nav-item ${isActive ? 'active ' + (color || '') : color}`;
     btn.innerHTML = `
       <span class="nav-item-icon">${icon}</span>
       <span class="nav-item-label">${label}</span>
     `;
-    btn.onclick = () => { currentState = state; render(); };
+    // Add ripple
+    addRipple(btn, color ? `ripple-${color}` : 'ripple-lime');
+    btn.onclick = () => {
+      if (currentState === state || isTransitioning) return;
+      const curIdx = SECTION_ORDER.indexOf(getActiveSection(currentState));
+      const newIdx = SECTION_ORDER.indexOf(state);
+      const dir = newIdx >= curIdx ? 'left' : 'right';
+      transitionTo(state, dir);
+    };
     nav.appendChild(btn);
   });
 
@@ -250,12 +545,45 @@ function renderSplash() {
   `;
   app.appendChild(splash);
 
+  // Particle system
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!REDUCED) {
+    const COLORS = ['#ccff00', '#00eefc', '#e040fb', '#ccff00'];
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('span');
+      p.className = 'splash-particle';
+      const size = Math.random() * 6 + 3;
+      const angle = (i / 24) * Math.PI * 2;
+      const dist = 80 + Math.random() * 100;
+      p.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${COLORS[Math.floor(Math.random() * COLORS.length)]};
+        left:50%; top:50%;
+      `;
+      splash.appendChild(p);
+      gsap.fromTo(p,
+        { x: 0, y: 0, opacity: 0.9, scale: 1 },
+        {
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist,
+          opacity: 0,
+          scale: 0.2,
+          duration: 1.4 + Math.random() * 1,
+          delay: 0.3 + Math.random() * 0.5,
+          ease: 'power2.out',
+          repeat: -1,
+          repeatDelay: 1.5 + Math.random() * 0.5,
+        }
+      );
+    }
+  }
+
   setTimeout(() => {
     splash.style.opacity = '0';
-    // ✅ Go directly to workouts_menu — skip intermediate menu screen
     setTimeout(() => { currentState = 'workouts_menu'; render(); }, 800);
-  }, 4000);
+  }, 3500);
 }
+
 
 // ─── MAIN MENU ──────────────────────────────────
 function renderMenu() {
@@ -358,6 +686,7 @@ function renderWorkoutsMenu() {
       </div>
       <span class="menu-card-arrow">›</span>
     `;
+    addRipple(card, 'ripple-lime');
     card.onclick = () => { currentState = state; render(); };
     nav.appendChild(card);
   });
@@ -384,6 +713,9 @@ function renderWorkoutsMenu() {
   }
 
   app.appendChild(content);
+
+  // GSAP stagger on menu cards
+  staggerCards('.menu-card');
 }
 
 // ─── UTILS ──────────────────────────────────────
@@ -397,27 +729,27 @@ function createCollapseCard(item, accentColor) {
     <span class="collapse-title">${item.title}</span>
     <div class="collapse-actions">
       <button class="delete-btn" title="Удалить">✕</button>
-      <span class="collapse-chevron">▾</span>
+      <span class="collapse-chevron">›</span>
     </div>
   `;
   header.querySelector('.delete-btn').onclick = (e) => {
     e.stopPropagation(); deleteItem(String(item.id));
   };
 
-  const body = document.createElement('div');
-  body.className = 'collapse-body';
-  body.innerHTML = `<p>${item.content.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>')}</p>`;
+  const contentHTML = item.content.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');
 
-  header.onclick = () => {
-    const isActive = card.classList.contains('active');
-    document.querySelectorAll('.collapse-card').forEach(c => c.classList.remove('active'));
-    if (!isActive) card.classList.add('active');
+  // Ripple + bottom sheet on tap
+  addRipple(header, `ripple-${accentColor}`);
+  header.onclick = (e) => {
+    if (e.target.classList.contains('delete-btn')) return;
+    haptic(5);
+    openBottomSheet(item.title, `<p>${contentHTML}</p>`, accentColor);
   };
 
   card.appendChild(header);
-  card.appendChild(body);
   return card;
 }
+
 
 
 // ─── TEXT CARDS (Theory / PKT / generic) ─────────
@@ -445,11 +777,8 @@ function renderTextCards(title, data, backState, accentColor = 'lime') {
     header.className = 'collapse-header';
     header.innerHTML = `
       <span class="collapse-title">${item.title}</span>
-      <span class="collapse-chevron">▾</span>
+      <span class="collapse-chevron">›</span>
     `;
-
-    const body = document.createElement('div');
-    body.className = 'collapse-body';
 
     let textHTML = item.content.replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
     let tableHTML = '';
@@ -462,22 +791,23 @@ function renderTextCards(title, data, backState, accentColor = 'lime') {
       });
       tableHTML += '</tbody></table></div>';
     }
-    body.innerHTML = `<p>${textHTML}</p>${tableHTML}`;
 
+    addRipple(header, `ripple-${accentColor}`);
     header.onclick = () => {
-      const isActive = card.classList.contains('active');
-      document.querySelectorAll('.collapse-card').forEach(c => c.classList.remove('active'));
-      if (!isActive) card.classList.add('active');
+      haptic(5);
+      openBottomSheet(item.title, `<p>${textHTML}</p>${tableHTML}`, accentColor);
     };
 
     card.appendChild(header);
-    card.appendChild(body);
     list.appendChild(card);
   });
 
   content.appendChild(list);
   app.appendChild(content);
+
+  staggerCards('.collapse-card');
 }
+
 
 // ─── FILMING SECTION ────────────────────────────
 function renderFilming() {
@@ -740,33 +1070,92 @@ function renderTraining(scheduleData, pageTitle) {
   const content = document.createElement('div');
   content.className = 'screen-content';
 
-  const tabsRow = document.createElement('div');
-  tabsRow.className = 'days-tabs';
+  // ─ Day Dot Progress Row ─
+  const todayIndex = new Date().getDay(); // 0=Sun, 1=Mon...
+  const dayDotOrder = [1,2,3,4,5,6,0]; // Mon...Sun
 
-  const dayContents = document.createElement('div');
+  let activeDay = 0; // default first tab
+  const dotRow = document.createElement('div');
+  dotRow.className = 'day-dot-row';
+  scheduleData.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = `day-dot${i === 0 ? ' active' : ''}`;
+    dotRow.appendChild(dot);
+  });
+  content.appendChild(dotRow);
 
   const shortDays = {
     'Понедельник': 'ПН', 'Вторник': 'ВТ', 'Среда': 'СР',
     'Четверг': 'ЧТ', 'Пятница': 'ПТ', 'Суббота': 'СБ', 'Воскресенье': 'ВСКР'
   };
 
+  // Tabs row (scrollable)
+  const tabsRow = document.createElement('div');
+  tabsRow.className = 'days-tabs';
+
+  const dayContents = document.createElement('div');
+  dayContents.style.overflow = 'hidden';
+  dayContents.style.position = 'relative';
+
+  function switchDay(newIndex, animate = true) {
+    if (newIndex < 0 || newIndex >= scheduleData.length) return;
+
+    const prev = activeDay;
+    activeDay = newIndex;
+
+    // Update tabs
+    document.querySelectorAll('.day-tab').forEach((t, i) => {
+      t.classList.toggle('active', i === newIndex);
+    });
+
+    // Update dots
+    document.querySelectorAll('.day-dot').forEach((d, i) => {
+      d.classList.toggle('active', i === newIndex);
+    });
+
+    // Animate panel switch
+    const panels = document.querySelectorAll('.day-content');
+    const dir = newIndex > prev ? 1 : -1;
+
+    panels.forEach((p, i) => {
+      if (i === newIndex) {
+        p.style.display = 'block';
+        if (animate) {
+          gsap.fromTo(p,
+            { x: dir * 60, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }
+          );
+        }
+      } else {
+        p.style.display = 'none';
+      }
+    });
+
+    // Micro-bounce on content
+    if (animate) {
+      gsap.fromTo(dayContents,
+        { y: -4 },
+        { y: 0, duration: 0.35, ease: 'elastic.out(1, 0.6)' }
+      );
+    }
+
+    haptic(5);
+  }
+
   scheduleData.forEach((dayData, index) => {
     // Tab
     const tab = document.createElement('div');
     tab.className = `day-tab${index === 0 ? ' active' : ''}`;
     tab.textContent = shortDays[dayData.day] || dayData.day;
-    tab.onclick = () => {
-      document.querySelectorAll('.day-tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.day-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(`day-${index}`).classList.add('active');
-    };
+    addRipple(tab, 'ripple-lime');
+    tab.onclick = () => switchDay(index);
     tabsRow.appendChild(tab);
 
     // Day panel
     const panel = document.createElement('div');
     panel.id = `day-${index}`;
-    panel.className = `day-content${index === 0 ? ' active' : ''}`;
+    panel.className = 'day-content';
+    panel.style.display = index === 0 ? 'block' : 'none';
 
     const dayHead = document.createElement('div');
     dayHead.innerHTML = `
@@ -834,8 +1223,42 @@ function renderTraining(scheduleData, pageTitle) {
   content.appendChild(tabsRow);
   content.appendChild(dayContents);
   app.appendChild(content);
+
+  // ─ Day Swipe Gesture ─
+  let swipeStartX = 0, swipeStartY = 0, swipeMoved = false;
+  const SWIPE_THRESHOLD = 55;
+
+  dayContents.addEventListener('touchstart', (e) => {
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+    swipeMoved = false;
+  }, { passive: true });
+
+  dayContents.addEventListener('touchmove', (e) => {
+    const dx = e.touches[0].clientX - swipeStartX;
+    const dy = e.touches[0].clientY - swipeStartY;
+    if (Math.abs(dx) > Math.abs(dy) + 10) swipeMoved = true;
+  }, { passive: true });
+
+  dayContents.addEventListener('touchend', (e) => {
+    if (!swipeMoved) return;
+    const dx = e.changedTouches[0].clientX - swipeStartX;
+    if (Math.abs(dx) < SWIPE_THRESHOLD) return;
+    if (dx < 0) switchDay(activeDay + 1);
+    else        switchDay(activeDay - 1);
+  }, { passive: true });
+
+  // Stagger session blocks
+  staggerCards('.session-block');
 }
 
 // ─── Start ─────────────────────────────────────
-fetchCustomTasks();
-render();
+async function init() {
+  initPullToRefresh();
+  initSwipeNavigator();
+  await fetchCustomTasks();
+  render();
+}
+
+init();
+
