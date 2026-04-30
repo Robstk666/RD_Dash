@@ -598,55 +598,67 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 10px 16px;
+  padding: 12px 16px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: rgba(255, 255, 255, 0.35);
-  border: none;
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.02);
   min-width: 80px;
   -webkit-tap-highlight-color: transparent;
   border-radius: 20px;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Active background bubble */
-.nav-item.active {
-  color: var(--lime);
-  background: rgba(204, 255, 0, 0.08); /* Faded lime bubble */
-}
-
-/* Specific colors for bubbles */
-.nav-item.active.cyan    { color: var(--cyan); background: rgba(0, 255, 242, 0.08); }
-.nav-item.active.magenta { color: var(--magenta); background: rgba(255, 0, 255, 0.08); }
-.nav-item.active.white   { color: #fff; background: rgba(255, 255, 255, 0.08); }
-
-/* The curved underline indicator from the screenshot */
-.nav-item::after {
+.nav-item::before {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 50%;
   left: 50%;
-  width: 0%;
-  height: 2px;
-  background: currentColor;
-  transform: translateX(-50%);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border-radius: 10px;
+  width: 150%;
+  padding-bottom: 150%; /* Keeps it a perfect circle */
+  background: var(--lime);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: -1;
 }
 
-.nav-item.active::after {
-  width: 40px;
-  bottom: 4px;
-  box-shadow: 0 0 12px currentColor;
+/* Base colors for the animated background */
+.nav-item.cyan::before    { background: var(--cyan); }
+.nav-item.magenta::before { background: var(--magenta); }
+.nav-item.white::before   { background: #fff; }
+
+/* Active state styles */
+.nav-item.active {
+  color: #050505;
+  border-color: transparent;
+  box-shadow: 0 8px 24px var(--lime-glow);
+}
+.nav-item.active.cyan    { box-shadow: 0 8px 24px var(--cyan-glow); }
+.nav-item.active.magenta { box-shadow: 0 8px 24px var(--magenta-glow); }
+.nav-item.active.white   { box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); }
+
+.nav-item.active::before {
+  transform: translate(-50%, -50%) scale(1);
 }
 
-.nav-item.active.cyan    { color: var(--cyan); }
-.nav-item.active.magenta { color: var(--magenta); }
-.nav-item.active.white   { color: #fff; }
+/* Hover effects for inactive items */
+.nav-item:hover:not(.active) {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--lime);
+}
+.nav-item.cyan:hover:not(.active)    { color: var(--cyan); }
+.nav-item.magenta:hover:not(.active) { color: var(--magenta); }
+.nav-item.white:hover:not(.active)   { color: #fff; }
 
 .nav-item-icon {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .nav-item-label {
@@ -654,6 +666,13 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Slight icon bounce on hover/active */
+.nav-item.active .nav-item-icon,
+.nav-item:hover .nav-item-icon {
+  transform: translateY(-2px);
 }
 
 /* ─── TRAINING DAYS NAV ──────────────── */
