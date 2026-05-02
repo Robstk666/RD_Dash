@@ -146,6 +146,7 @@ function addRipple(el, colorClass = 'ripple-lime') {
 
 // ─── GSAP Page Transition ─────────────────────────
 let isTransitioning = false;
+let isDaySwiping = false; // blocks section navigator while swiping days
 
 async function transitionTo(newState, direction = 'left') {
   if (isTransitioning) return;
@@ -548,43 +549,10 @@ function renderSplash() {
   `;
   app.appendChild(splash);
 
-  // Particle system
-  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!REDUCED) {
-    const COLORS = ['#ccff00', '#00eefc', '#e040fb', '#ccff00'];
-    for (let i = 0; i < 24; i++) {
-      const p = document.createElement('span');
-      p.className = 'splash-particle';
-      const size = Math.random() * 6 + 3;
-      const angle = (i / 24) * Math.PI * 2;
-      const dist = 80 + Math.random() * 100;
-      p.style.cssText = `
-        width:${size}px; height:${size}px;
-        background:${COLORS[Math.floor(Math.random() * COLORS.length)]};
-        left:50%; top:50%;
-      `;
-      splash.appendChild(p);
-      gsap.fromTo(p,
-        { x: 0, y: 0, opacity: 0.9, scale: 1 },
-        {
-          x: Math.cos(angle) * dist,
-          y: Math.sin(angle) * dist,
-          opacity: 0,
-          scale: 0.2,
-          duration: 1.4 + Math.random() * 1,
-          delay: 0.3 + Math.random() * 0.5,
-          ease: 'power2.out',
-          repeat: -1,
-          repeatDelay: 1.5 + Math.random() * 0.5,
-        }
-      );
-    }
-  }
-
   setTimeout(() => {
     splash.style.opacity = '0';
     setTimeout(() => { currentState = 'workouts_menu'; render(); }, 800);
-  }, 3500);
+  }, 4000);
 }
 
 
@@ -1235,20 +1203,26 @@ function renderTraining(scheduleData, pageTitle) {
     swipeStartX = e.touches[0].clientX;
     swipeStartY = e.touches[0].clientY;
     swipeMoved = false;
+    isDaySwiping = false; // reset until we confirm horizontal
   }, { passive: true });
 
   dayContents.addEventListener('touchmove', (e) => {
     const dx = e.touches[0].clientX - swipeStartX;
     const dy = e.touches[0].clientY - swipeStartY;
-    if (Math.abs(dx) > Math.abs(dy) + 10) swipeMoved = true;
+    if (Math.abs(dx) > Math.abs(dy) + 10) {
+      swipeMoved = true;
+      isDaySwiping = true; // lock section navigator out
+    }
   }, { passive: true });
 
   dayContents.addEventListener('touchend', (e) => {
+    isDaySwiping = false; // always release the lock
     if (!swipeMoved) return;
+    swipeMoved = false;
     const dx = e.changedTouches[0].clientX - swipeStartX;
     if (Math.abs(dx) < SWIPE_THRESHOLD) return;
-    if (dx < 0) switchDay(activeDay + 1);
-    else        switchDay(activeDay - 1);
+    if (dx < 0 && activeDay < scheduleData.length - 1) switchDay(activeDay + 1);
+    else if (dx > 0 && activeDay > 0)                  switchDay(activeDay - 1);
   }, { passive: true });
 
   // Stagger session blocks
