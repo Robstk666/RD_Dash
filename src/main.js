@@ -821,7 +821,7 @@ const agentsData = [
     name: 'Общие вопросы',
     desc: 'Универсальный помощник',
     emoji: '💬',
-    url: 'https://gemini.google.com/gem/db22963dae18',
+    url: 'https://gemini.google.com/app/77b65e820c265c18',
   },
   {
     name: 'Карьерист',
@@ -852,6 +852,12 @@ const agentsData = [
     desc: 'Разработка AI-продуктов',
     emoji: '🤖',
     url: 'https://gemini.google.com/gem/db22963dae18',
+  },
+  {
+    name: 'Мой продукт',
+    desc: 'По продукту',
+    emoji: '📦',
+    url: 'https://gemini.google.com/app/c_39483d512712ba16',
   },
 ];
 
