@@ -1593,3 +1593,38 @@ body.section-filming .swipe-edge-indicator.right {
   }
 }
 
+
+/* ─── GOLD ACCENT (Agents) ─────────────────────── */
+:root {
+  --gold:        #f5c842;
+  --gold-dim:    #c9a020;
+  --gold-glow:   rgba(245, 200, 66, 0.25);
+  --gold-subtle: rgba(245, 200, 66, 0.07);
+}
+
+.hud-chip.gold {
+  color: var(--gold);
+  background: var(--gold-subtle);
+  border-color: rgba(245, 200, 66, 0.25);
+}
+.hud-chip.gold .hud-dot { background: var(--gold); }
+
+.menu-card.gold {
+  border-color: rgba(245, 200, 66, 0.2);
+  background: linear-gradient(135deg, rgba(245,200,66,0.06) 0%, transparent 100%);
+}
+.menu-card.gold:active { box-shadow: 0 0 0 1px rgba(245,200,66,0.3) inset; }
+
+.nav-item.active.gold {
+  box-shadow: 0 8px 24px var(--gold-glow), 0 0 0 1px rgba(245,200,66,0.15) inset !important;
+  filter: drop-shadow(0 0 8px rgba(245,200,66,0.4));
+}
+.nav-item.gold .nav-item-icon svg { stroke: var(--gold-dim); }
+.nav-item.active.gold .nav-item-icon svg { stroke: var(--gold); }
+.nav-item.active.gold .nav-item-label { color: var(--gold); }
+
+.ripple-gold { background: rgba(245, 200, 66, 0.3); }
+
+.top-bar.gold .top-bar-title,
+.top-bar.gold .top-bar-back { color: var(--gold); }
+.top-bar.gold { border-bottom-color: rgba(245,200,66,0.15); }
