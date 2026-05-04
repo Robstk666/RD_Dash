@@ -859,6 +859,24 @@ const agentsData = [
     emoji: '📦',
     url: 'https://gemini.google.com/app/c_39483d512712ba16',
   },
+  {
+    name: 'Сьемки',
+    desc: 'Организация съемок',
+    emoji: '📸',
+    url: 'https://gemini.google.com/gem/9e4418a047e2/8a46b2222f2aaaa4',
+  },
+  {
+    name: 'Финансовый психолог',
+    desc: 'Психология денег',
+    emoji: '🧠',
+    url: 'https://gemini.google.com/gem/e6f2894a6c7d/bbada49a857037ae',
+  },
+  {
+    name: 'Косметолог',
+    desc: 'Уход и красота',
+    emoji: '✨',
+    url: 'https://gemini.google.com/gem/1d1b841894a2/83ca900cbe6ba225',
+  },
 ];
 
 function renderAgents() {
