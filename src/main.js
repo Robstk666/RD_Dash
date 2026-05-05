@@ -877,6 +877,12 @@ const agentsData = [
     emoji: '✨',
     url: 'https://gemini.google.com/gem/1d1b841894a2/83ca900cbe6ba225',
   },
+  {
+    name: 'UDS_OZON',
+    desc: 'Маркетплейсы · Аналитика',
+    emoji: '🛒',
+    url: 'https://gemini.google.com/gem/60184185607f/8da3214d4b3ec83f',
+  },
 ];
 
 function renderAgents() {
