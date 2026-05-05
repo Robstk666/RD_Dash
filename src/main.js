@@ -415,7 +415,17 @@ const ICONS = {
   pkt: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20"/><path d="M2 12h20"/></svg>`,
   copy: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`,
   check: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`,
-  derma: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`
+  derma: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  messageSquare: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  rocket: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>`,
+  scale: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M2 16l3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h18"/></svg>`,
+  barChart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>`,
+  bot: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>`,
+  box: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+  camera: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
+  brain: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-.08 2.5 2.5 0 0 0 2.08.08A2.5 2.5 0 0 0 22 17.5c0-1.06-.66-2-1.6-2.36a2.5 2.5 0 0 0-.25-3.32 2.5 2.5 0 0 0 1.25-2.18A2.5 2.5 0 0 0 18.9 7.3a2.5 2.5 0 0 0-1.3-3.6 2.5 2.5 0 0 0-3.1-1.2 2.5 2.5 0 0 0-5 0z"/></svg>`,
+  sparkles: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="m19 5-1.1 3.2a1 1 0 0 1-.7.7L14 10l3.2 1.1a1 1 0 0 1 .7.7L19 15l1.1-3.2a1 1 0 0 1 .7-.7L24 10l-3.2-1.1a1 1 0 0 1-.7-.7z"/></svg>`,
+  shoppingCart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`
 };
 
 const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'agents', 'settings', 'trash'];
@@ -820,67 +830,67 @@ const agentsData = [
   {
     name: 'Общие вопросы',
     desc: 'Универсальный помощник',
-    emoji: '💬',
+    icon: ICONS.messageSquare,
     url: 'https://gemini.google.com/app/77b65e820c265c18',
   },
   {
     name: 'Карьерист',
     desc: 'Карьера · Стратегия · Рост',
-    emoji: '🚀',
+    icon: ICONS.rocket,
     url: 'https://gemini.google.com/gem/5ba2e30e2f05',
   },
   {
     name: 'Юристы',
     desc: 'Юридические вопросы',
-    emoji: '⚖️',
+    icon: ICONS.scale,
     url: 'https://gemini.google.com/app/fb41dc094e8b81c5',
   },
   {
     name: 'Тренер',
     desc: 'Тренировки · Физподготовка',
-    emoji: '🏋️',
+    icon: ICONS.gym,
     url: 'https://gemini.google.com/app/14e039eec65a73d3',
   },
   {
     name: 'Репетитор EBITDA',
     desc: 'Финансы · Аналитика · EBITDA',
-    emoji: '📊',
+    icon: ICONS.barChart,
     url: 'https://gemini.google.com/app/fd519fdf31249075',
   },
   {
     name: 'AI-билдер',
     desc: 'Разработка AI-продуктов',
-    emoji: '🤖',
+    icon: ICONS.bot,
     url: 'https://gemini.google.com/gem/db22963dae18',
   },
   {
     name: 'Мой продукт',
     desc: 'По продукту',
-    emoji: '📦',
+    icon: ICONS.box,
     url: 'https://gemini.google.com/app/c_39483d512712ba16',
   },
   {
     name: 'Сьемки',
     desc: 'Организация съемок',
-    emoji: '📸',
+    icon: ICONS.camera,
     url: 'https://gemini.google.com/gem/9e4418a047e2/8a46b2222f2aaaa4',
   },
   {
     name: 'Финансовый психолог',
     desc: 'Психология денег',
-    emoji: '🧠',
+    icon: ICONS.brain,
     url: 'https://gemini.google.com/gem/e6f2894a6c7d/bbada49a857037ae',
   },
   {
     name: 'Косметолог',
     desc: 'Уход и красота',
-    emoji: '✨',
+    icon: ICONS.sparkles,
     url: 'https://gemini.google.com/gem/1d1b841894a2/83ca900cbe6ba225',
   },
   {
     name: 'UDS_OZON',
     desc: 'Маркетплейсы · Аналитика',
-    emoji: '🛒',
+    icon: ICONS.shoppingCart,
     url: 'https://gemini.google.com/gem/60184185607f/8da3214d4b3ec83f',
   },
 ];
@@ -909,7 +919,7 @@ function renderAgents() {
     empty.innerHTML = '<div style="font-size:40px;margin-bottom:12px">🤖</div><div>Ссылки на агентов<br>будут добавлены скоро</div>';
     list.appendChild(empty);
   } else {
-    agentsData.forEach(({ name, desc, emoji = '🤖', url }) => {
+    agentsData.forEach(({ name, desc, icon = ICONS.bot, url }) => {
       const card = document.createElement('a');
       card.className = 'menu-card gold';
       card.href = url;
@@ -917,7 +927,7 @@ function renderAgents() {
       card.rel = 'noopener noreferrer';
       card.style.textDecoration = 'none';
       card.innerHTML = `
-        <div class="menu-card-icon" style="font-size:28px">${emoji}</div>
+        <div class="menu-card-icon" style="color:var(--gold); display:flex; align-items:center; justify-content:center;">${icon}</div>
         <div class="menu-card-body">
           <div class="menu-card-label">Агент</div>
           <div class="menu-card-title">${name}</div>

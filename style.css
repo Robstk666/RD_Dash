@@ -630,6 +630,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 .nav-item.cyan::before    { background: var(--cyan); }
 .nav-item.magenta::before { background: var(--magenta); }
 .nav-item.white::before   { background: #fff; }
+.nav-item.gold::before    { background: var(--gold); }
 
 /* Active state styles */
 .nav-item.active {
@@ -1620,8 +1621,8 @@ body.section-filming .swipe-edge-indicator.right {
   filter: drop-shadow(0 0 8px rgba(245,200,66,0.4));
 }
 .nav-item.gold .nav-item-icon svg { stroke: var(--gold-dim); }
-.nav-item.active.gold .nav-item-icon svg { stroke: var(--gold); }
-.nav-item.active.gold .nav-item-label { color: var(--gold); }
+.nav-item.active.gold .nav-item-icon svg { stroke: #050505; }
+.nav-item.active.gold .nav-item-label { color: #050505; }
 
 .ripple-gold { background: rgba(245, 200, 66, 0.3); }
 
