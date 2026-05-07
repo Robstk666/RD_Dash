@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData , headOfAIData} from './data.js';
+import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData , headOfAIData, moneySelfEsteemData} from './data.js';
 
 
 // ─── Supabase DB ─────────────────────────────────
@@ -425,10 +425,11 @@ const ICONS = {
   camera: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>`,
   brain: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 0 7 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-.08 2.5 2.5 0 0 0 2.08.08A2.5 2.5 0 0 0 22 17.5c0-1.06-.66-2-1.6-2.36a2.5 2.5 0 0 0-.25-3.32 2.5 2.5 0 0 0 1.25-2.18A2.5 2.5 0 0 0 18.9 7.3a2.5 2.5 0 0 0-1.3-3.6 2.5 2.5 0 0 0-3.1-1.2 2.5 2.5 0 0 0-5 0z"/></svg>`,
   sparkles: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3z"/><path d="m19 5-1.1 3.2a1 1 0 0 1-.7.7L14 10l3.2 1.1a1 1 0 0 1 .7.7L19 15l1.1-3.2a1 1 0 0 1 .7-.7L24 10l-3.2-1.1a1 1 0 0 1-.7-.7z"/></svg>`,
-  shoppingCart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`
+  shoppingCart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
+  dollar: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`
 };
 
-const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'agents', 'settings', 'trash', 'head_of_ai'];
+const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'agents', 'settings', 'trash', 'head_of_ai', 'money_self_esteem'];
 
 function render() {
   const color = SECTION_COLORS[currentState] || 'lime';
@@ -1076,6 +1077,22 @@ function renderOffer() {
   aiBtn.onclick = () => { currentState = 'head_of_ai'; render(); };
   content.appendChild(aiBtn);
 
+  // Money - Self Esteem section link
+  const moneyBtn = document.createElement('div');
+  moneyBtn.className = 'menu-card magenta';
+  moneyBtn.innerHTML = `
+    <div class="menu-card-icon" style="color:var(--magenta)">${ICONS.dollar}</div>
+    <div class="menu-card-body">
+      <div class="menu-card-label">Психология</div>
+      <div class="menu-card-title">ДЕНЬГИ -самооценка-</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Mindset & Value</div>
+    </div>
+    <span class="menu-card-arrow" style="color:var(--magenta)">›</span>
+  `;
+  addRipple(moneyBtn, 'ripple-magenta');
+  moneyBtn.onclick = () => { currentState = 'money_self_esteem'; render(); };
+  content.appendChild(moneyBtn);
+
 // Cover Letters
   const lettersLabel = document.createElement('div');
   lettersLabel.className = 'section-label';
@@ -1450,3 +1467,29 @@ async function init() {
 
 init();
 
+
+// ─── MONEY - SELF ESTEEM ──────────────────────────
+function renderMoneySelfEsteem() {
+  renderTopBar('МЫШЛЕНИЕ', () => { currentState = 'offer'; render(); }, 'magenta', false);
+
+  const content = document.createElement('div');
+  content.className = 'screen-content';
+
+  const hud = document.createElement('div');
+  hud.className = 'section-hud';
+  hud.innerHTML = `
+    <div class="hud-chip magenta"><span class="hud-dot"></span> Психология и деньги</div>
+    <h1 class="hud-title">ДЕНЬГИ<br>-самооценка-</h1>
+  `;
+  content.appendChild(hud);
+
+  const list = document.createElement('div');
+  list.className = 'cards-list';
+
+  moneySelfEsteemData.forEach(item => {
+    list.appendChild(createCollapseCard(item, 'magenta'));
+  });
+
+  content.appendChild(list);
+  app.appendChild(content);
+}
