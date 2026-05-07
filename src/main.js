@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData } from './data.js';
+import { theoryData, trainingSchedule, outdoorTrainingSchedule, filmingData, coverLettersData, offerData, pktData, dermaData , headOfAIData} from './data.js';
 
 
 // ─── Supabase DB ─────────────────────────────────
@@ -428,7 +428,7 @@ const ICONS = {
   shoppingCart: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`
 };
 
-const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'agents', 'settings', 'trash'];
+const NAV_STATES = ['menu', 'workouts_menu', 'theory', 'training', 'outdoor_training', 'pkt', 'derma', 'filming', 'offer', 'agents', 'settings', 'trash', 'head_of_ai'];
 
 function render() {
   const color = SECTION_COLORS[currentState] || 'lime';
@@ -463,6 +463,7 @@ function render() {
   else if (currentState === 'derma')            renderTextCards('ДЕРМА', dermaData, 'workouts_menu', 'lime');
   else if (currentState === 'filming')          renderFilming();
   else if (currentState === 'offer')            renderOffer();
+  else if (currentState === 'head_of_ai')       renderHeadOfAI();
   else if (currentState === 'agents')           renderAgents();
   else if (currentState === 'settings')         renderSettings();
   else if (currentState === 'trash')            renderTrash();
@@ -1058,7 +1059,24 @@ function renderOffer() {
   `;
   content.appendChild(hud);
 
-  // Cover Letters
+  
+  // Head of AI section link
+  const aiBtn = document.createElement('div');
+  aiBtn.className = 'menu-card magenta';
+  aiBtn.innerHTML = `
+    <div class="menu-card-icon" style="color:var(--magenta)">${ICONS.brain}</div>
+    <div class="menu-card-body">
+      <div class="menu-card-label">Должность</div>
+      <div class="menu-card-title">Директор по внедрению ИИ</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Head of AI</div>
+    </div>
+    <span class="menu-card-arrow" style="color:var(--magenta)">›</span>
+  `;
+  addRipple(aiBtn, 'ripple-magenta');
+  aiBtn.onclick = () => { currentState = 'head_of_ai'; render(); };
+  content.appendChild(aiBtn);
+
+// Cover Letters
   const lettersLabel = document.createElement('div');
   lettersLabel.className = 'section-label';
   lettersLabel.textContent = 'Сопроводительные письма';
@@ -1102,6 +1120,63 @@ function renderOffer() {
   content.appendChild(list);
   app.appendChild(content);
 }
+
+// ─── HEAD OF AI ──────────────────────────────────
+function renderHeadOfAI() {
+  renderTopBar('HEAD OF AI', () => { currentState = 'offer'; render(); }, 'magenta', false);
+
+  const content = document.createElement('div');
+  content.className = 'screen-content';
+
+  const hud = document.createElement('div');
+  hud.className = 'section-hud';
+  hud.innerHTML = `
+    <div class="hud-chip magenta"><span class="hud-dot"></span> Директор по внедрению ИИ</div>
+    <h1 class="hud-title">Head of<br>AI</h1>
+  `;
+  content.appendChild(hud);
+
+  const list = document.createElement('div');
+  list.className = 'menu-nav';
+  list.style.padding = '0';
+
+  headOfAIData.forEach(block => {
+    const card = document.createElement('div');
+    card.className = 'menu-card magenta';
+    card.style.flexDirection = 'column';
+    card.style.alignItems = 'flex-start';
+    card.style.padding = '20px';
+    
+    card.innerHTML = `
+      <div style="display:flex; justify-content:space-between; width:100%; align-items:center; margin-bottom:12px;">
+        <div class="menu-card-title" style="white-space:normal; line-height:1.4;">${block.title}</div>
+        <button class="copy-btn" style="margin-top:0; padding:8px 16px; min-width:auto;">
+          <div class="copy-btn-icon" style="margin-right:6px;">${ICONS.copy}</div>
+          <span style="font-size:12px;">Скопировать</span>
+        </button>
+      </div>
+      <div style="font-size:13px; color:var(--text-dim); line-height:1.6; white-space:pre-wrap;">${block.content}</div>
+    `;
+
+    const btn = card.querySelector('.copy-btn');
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(block.content).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = `<div class="copy-btn-icon" style="color:var(--lime); margin-right:6px;">${ICONS.check}</div><span style="font-size:12px;">Скопировано</span>`;
+        btn.style.borderColor = 'rgba(204,255,0,0.4)';
+        setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; }, 2000);
+      });
+    };
+
+    list.appendChild(card);
+  });
+
+  content.appendChild(list);
+  app.appendChild(content);
+  staggerCards('.menu-card');
+}
+
 
 // ─── TRASH SECTION ──────────────────────────────
 function renderTrash() {
