@@ -465,6 +465,7 @@ function render() {
   else if (currentState === 'filming')          renderFilming();
   else if (currentState === 'offer')            renderOffer();
   else if (currentState === 'head_of_ai')       renderHeadOfAI();
+  else if (currentState === 'money_self_esteem')  renderMoneySelfEsteem();
   else if (currentState === 'agents')           renderAgents();
   else if (currentState === 'settings')         renderSettings();
   else if (currentState === 'trash')            renderTrash();
