@@ -459,7 +459,7 @@ function render() {
   else if (currentState === 'theory')           renderTextCards('Биомеханика и ЦНС', theoryData, 'workouts_menu', 'lime');
   else if (currentState === 'training')         renderTraining(trainingSchedule, 'Программа (в зале)');
   else if (currentState === 'outdoor_training') renderTraining(outdoorTrainingSchedule, 'Тренировки без зала');
-  else if (currentState === 'pkt')              renderTextCards('ПКТ', pktData, 'workouts_menu', 'lime');
+  else if (currentState === 'pkt')              renderTextCards('БАДЫ / ПКТ', pktData, 'workouts_menu', 'lime');
   else if (currentState === 'derma')            renderTextCards('ДЕРМА', dermaData, 'workouts_menu', 'lime');
   else if (currentState === 'filming')          renderFilming();
   else if (currentState === 'offer')            renderOffer();
@@ -658,7 +658,7 @@ function renderWorkoutsMenu() {
     { icon: ICONS.theory,  label: 'База знаний', title: 'Теория и ЦНС', state: 'theory' },
     { icon: ICONS.gym,     label: 'Зал',         title: 'Программа тренировок', state: 'training' },
     { icon: ICONS.outdoor, label: 'Улица',       title: 'Тренировки без зала', state: 'outdoor_training' },
-    { icon: ICONS.pkt,     label: 'Восстановление', title: 'ПКТ',          state: 'pkt' },
+    { icon: ICONS.pkt,     label: 'Восстановление', title: 'БАДы',          state: 'pkt' },
     { icon: ICONS.derma,   label: 'Дерма',         title: 'Уход за лицом',    state: 'derma' },
   ];
 
