@@ -186,8 +186,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .splash-dar {
-  height: 70vh;
-  max-width: 50%;
+  width: 50%;
+  height: auto;
+  max-height: 70vh;
   object-fit: contain;
   object-position: left bottom;
   transform: translateX(-100%);
@@ -196,8 +197,9 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 }
 
 .splash-rob {
-  height: 80vh;
-  max-width: 50%;
+  width: 50%;
+  height: auto;
+  max-height: 80vh;
   object-fit: contain;
   object-position: right bottom;
   transform: translateX(100%);
@@ -1682,16 +1684,17 @@ body.section-filming .swipe-edge-indicator.right {
 }
 
 .global-bg-container img {
-  max-width: 50%;
+  width: 50%;
+  height: auto;
   object-fit: contain;
 }
 
 .global-bg-dar {
-  height: 70vh;
+  max-height: 70vh;
   object-position: left bottom;
 }
 
 .global-bg-rob {
-  height: 80vh;
+  max-height: 80vh;
   object-position: right bottom;
 }
