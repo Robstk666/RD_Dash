@@ -656,33 +656,13 @@ function renderWorkoutsMenu() {
   hud.className = 'section-hud';
   hud.innerHTML = `
     <div class="hud-chip lime"><span class="hud-dot"></span> Духовный модуль</div>
-    <h1 class="hud-title">ТЕМЫ<br>ОБСУЖДЕНИЯ</h1>
+    <h1 class="hud-title">ТЕМЫ ДЛЯ<br>ОБСУЖДЕНИЯ</h1>
   `;
   content.appendChild(hud);
 
   const nav = document.createElement('div');
   nav.className = 'menu-nav';
   nav.style.padding = '0';
-
-  const items = [
-    { icon: ICONS.theory,  label: 'День не проебан', title: 'День не проебан', state: 'workouts_menu' }
-  ];
-
-  items.forEach(({ icon, label, title, state }) => {
-    const card = document.createElement('div');
-    card.className = 'menu-card lime';
-    card.innerHTML = `
-      <div class="menu-card-icon">${icon}</div>
-      <div class="menu-card-body">
-        <div class="menu-card-label">${label}</div>
-        <div class="menu-card-title">${title}</div>
-      </div>
-      <span class="menu-card-arrow">›</span>
-    `;
-    addRipple(card, 'ripple-lime');
-    card.onclick = () => { currentState = state; render(); };
-    nav.appendChild(card);
-  });
 
   content.appendChild(nav);
 
@@ -694,7 +674,7 @@ function renderWorkoutsMenu() {
     header.style.fontSize = '20px';
     header.style.marginTop = '40px';
     header.style.marginBottom = '16px';
-    header.textContent = 'МОИ ЗАДАЧИ';
+    header.textContent = 'ПОСЛЕДНИЕ';
     content.appendChild(header);
 
     const taskList = document.createElement('div');
