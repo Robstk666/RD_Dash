@@ -92,10 +92,21 @@ async function restoreItem(id) {
 }
 
 async function forceDeleteItem(id) {
-  if (id.includes('-')) {
-    customTasks = customTasks.filter(x => x.id !== id);
+  // If it's a custom task from DB (either uuid or int)
+  const isCustom = customTasks.some(x => String(x.id) === id);
+  if (isCustom) {
+    customTasks = customTasks.filter(x => String(x.id) !== id);
     render();
     await hardDeleteCustomTaskDB(id);
+    render();
+  } else {
+    // If it's a base item, we can't truly delete it from code,
+    // but we can add it to a hard-deleted list in localStorage
+    const hardDeleted = JSON.parse(localStorage.getItem('hardDeletedItems') || '[]');
+    if (!hardDeleted.includes(id)) {
+      hardDeleted.push(id);
+      localStorage.setItem('hardDeletedItems', JSON.stringify(hardDeleted));
+    }
     render();
   }
 }
@@ -820,7 +831,8 @@ function renderFilming() {
   list.className = 'cards-list';
 
   const deleted = getDeletedItems();
-  const baseData = filmingData.filter(item => !deleted.includes(String(item.id)));
+  const hardDeleted = JSON.parse(localStorage.getItem('hardDeletedItems') || '[]');
+  const baseData = filmingData.filter(item => !deleted.includes(String(item.id)) && !hardDeleted.includes(String(item.id)));
   const cData = customTasks.filter(item => item.section === 'filming' && !item.is_deleted);
   
   [...baseData, ...cData].forEach(item => {
@@ -1131,7 +1143,8 @@ function renderOffer() {
   const list = document.createElement('div');
   list.className = 'cards-list';
 
-  const baseData = offerData.filter(item => !deleted.includes(String(item.id)));
+  const hardDeleted = JSON.parse(localStorage.getItem('hardDeletedItems') || '[]');
+  const baseData = offerData.filter(item => !deleted.includes(String(item.id)) && !hardDeleted.includes(String(item.id)));
   const cData = customTasks.filter(item => item.section === 'offer' && !item.is_deleted);
   
   [...baseData, ...cData].forEach(item => {
@@ -1216,7 +1229,8 @@ function renderTrash() {
   content.appendChild(hud);
 
   const deleted = getDeletedItems();
-  const baseAll = [...filmingData, ...offerData].filter(d => deleted.includes(String(d.id)));
+  const hardDeleted = JSON.parse(localStorage.getItem('hardDeletedItems') || '[]');
+  const baseAll = [...filmingData, ...offerData].filter(d => deleted.includes(String(d.id)) && !hardDeleted.includes(String(d.id)));
   const customAll = customTasks.filter(t => t.is_deleted);
   const items = [...baseAll, ...customAll];
 
@@ -1243,19 +1257,17 @@ function renderTrash() {
       restoreBtn.onclick = () => { restoreItem(String(item.id)); };
       actions.appendChild(restoreBtn);
 
-      if (String(item.id).includes('-')) {
-        // Allow hard delete for supabase items to save space
-        const rmBtn = document.createElement('button');
-        rmBtn.className = 'delete-btn';
-        rmBtn.style.background = 'rgba(255,0,0,0.1)';
-        rmBtn.style.color = 'var(--red)';
-        rmBtn.style.marginLeft = '8px';
-        rmBtn.textContent = '✕ Навсегда';
-        rmBtn.onclick = () => {
-          if(confirm('Удалить навсегда из базы?')) forceDeleteItem(String(item.id));
-        };
-        actions.appendChild(rmBtn);
-      }
+      // Allow hard delete for all items
+      const rmBtn = document.createElement('button');
+      rmBtn.className = 'delete-btn';
+      rmBtn.style.background = 'rgba(255,0,0,0.1)';
+      rmBtn.style.color = 'var(--red)';
+      rmBtn.style.marginLeft = '8px';
+      rmBtn.textContent = '✕ Навсегда';
+      rmBtn.onclick = () => {
+        if(confirm('Удалить навсегда?')) forceDeleteItem(String(item.id));
+      };
+      actions.appendChild(rmBtn);
       
       card.appendChild(title);
       card.appendChild(actions);
