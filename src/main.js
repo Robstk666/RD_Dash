@@ -403,10 +403,10 @@ const SECTION_COLORS = {
 };
 
 const ICONS = {
-  training: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-  filming: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>`,
-  offer: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-  agents: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><circle cx="18" cy="8" r="3"/><path d="M21 20c0-2.5-1.8-4.5-4-5.5"/></svg>`,
+  training: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+  filming: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>`,
+  offer: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  agents: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
   settings: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`,
   trash: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>`,
   theory: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
@@ -489,10 +489,10 @@ function renderBottomNav() {
   nav.id = 'bottom-nav';
 
   const navItems = [
-    { key: 'training', icon: ICONS.training, label: 'Тренировки', color: '',         state: 'workouts_menu' },
-    { key: 'filming',  icon: ICONS.filming,  label: 'Съёмки',     color: 'cyan',     state: 'filming' },
-    { key: 'offer',    icon: ICONS.offer,    label: 'Оффер',       color: 'magenta',  state: 'offer' },
-    { key: 'agents',   icon: ICONS.agents,   label: 'Агенты',      color: 'gold',     state: 'agents' },
+    { key: 'training', icon: ICONS.training, label: 'Обсуждения', color: '',         state: 'workouts_menu' },
+    { key: 'filming',  icon: ICONS.filming,  label: 'ФИЛЬМЫ',     color: 'cyan',     state: 'filming' },
+    { key: 'offer',    icon: ICONS.offer,    label: 'МЕСТА',       color: 'magenta',  state: 'offer' },
+    { key: 'agents',   icon: ICONS.agents,   label: 'В разарб.',   color: 'gold',     state: 'agents' },
     { key: 'settings', icon: ICONS.settings, label: 'Настройки',  color: 'white',    state: 'settings' },
   ];
 
@@ -595,18 +595,18 @@ function renderMenu() {
 
   const menuItems = [
     {
-      color: 'lime', icon: '⚡', label: 'Тренировки',
-      title: 'Прыжок', desc: 'Теория · Программы · ПКТ',
+      color: 'lime', icon: '💬', label: 'Обсуждения',
+      title: 'ТЕмы для обсуждения', desc: 'Теория · Программы · ПКТ',
       state: 'workouts_menu'
     },
     {
-      color: 'cyan', icon: '🎥', label: 'Съёмки',
-      title: 'Медиа', desc: 'Задания · Сценарии',
+      color: 'cyan', icon: '🎬', label: 'ФИЛЬМЫ',
+      title: 'Список фильмов', desc: 'Задания · Сценарии',
       state: 'filming'
     },
     {
-      color: 'magenta', icon: '💼', label: 'Карьера',
-      title: 'Проект Оффер', desc: 'Письма · Задачи',
+      color: 'magenta', icon: '📍', label: 'МЕСТА',
+      title: 'Список мест для посещений', desc: 'Письма · Задачи',
       state: 'offer'
     },
     {
@@ -638,7 +638,7 @@ function renderMenu() {
 // ─── WORKOUTS HOME (Training section home) ────────────────────────
 function renderWorkoutsMenu() {
   // Title instead of logo in top bar
-  renderTopBar('ТРЕНИРОВКИ', null, '', false);
+  renderTopBar('ОБСУЖДЕНИЯ', null, '', false);
 
   // Background watermark is now global in render()
   const content = document.createElement('div');
@@ -800,7 +800,7 @@ function renderTextCards(title, data, backState, accentColor = 'lime') {
 
 // ─── FILMING SECTION ────────────────────────────
 function renderFilming() {
-  renderTopBar('СЪЁМКИ', null, 'cyan', false);
+  renderTopBar('ФИЛЬМЫ', null, 'cyan', false);
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -899,7 +899,7 @@ const agentsData = [
 ];
 
 function renderAgents() {
-  renderTopBar('АГЕНТЫ', null, 'gold', false);
+  renderTopBar('В РАЗРАБ.', null, 'gold', false);
 
   const content = document.createElement('div');
   content.className = 'screen-content';
@@ -976,21 +976,21 @@ function renderSettings() {
           <input type="radio" class="check" name="task-section" value="training" id="rt1" checked>
           <label for="rt1" class="label">
             <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
-            <span>Тренировки</span>
+            <span>Обсуждения</span>
           </label>
         </div>
         <div class="checkbox-wrapper">
           <input type="radio" class="check" name="task-section" value="filming" id="rt2">
           <label for="rt2" class="label">
             <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
-            <span>Съёмки</span>
+            <span>ФИЛЬМЫ</span>
           </label>
         </div>
         <div class="checkbox-wrapper">
           <input type="radio" class="check" name="task-section" value="offer" id="rt3">
           <label for="rt3" class="label">
             <svg width="32" height="32" viewBox="0 0 95 95"><rect x="30" y="20" width="50" height="50" stroke="currentColor" fill="none" rx="4" ry="4"></rect><g transform="translate(0,-952.36222)"><path d="m 56,963 c -102,122 6,9 7,9 17,-5 -66,69 -38,52 122,-77 -7,14 18,4 29,-11 45,-43 23,-4" stroke="currentColor" stroke-width="3" fill="none" class="path1"></path></g></svg>
-            <span>Оффер</span>
+            <span>МЕСТА</span>
           </label>
         </div>
       </div>
@@ -1048,7 +1048,7 @@ function renderSettings() {
 
 // ─── OFFER SECTION ──────────────────────────────
 function renderOffer() {
-  renderTopBar('ОФФЕР', null, 'magenta', false);
+  renderTopBar('МЕСТА', null, 'magenta', false);
 
   const content = document.createElement('div');
   content.className = 'screen-content';
