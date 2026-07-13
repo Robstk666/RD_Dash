@@ -492,7 +492,7 @@ function renderBottomNav() {
     { key: 'training', icon: ICONS.training, label: 'Обсуждения', color: '',         state: 'workouts_menu' },
     { key: 'filming',  icon: ICONS.filming,  label: 'ФИЛЬМЫ',     color: 'cyan',     state: 'filming' },
     { key: 'offer',    icon: ICONS.offer,    label: 'МЕСТА',       color: 'magenta',  state: 'offer' },
-    { key: 'agents',   icon: ICONS.agents,   label: 'В разарб.',   color: 'gold',     state: 'agents' },
+    { key: 'agents',   icon: ICONS.agents,   label: 'В разраб.',   color: 'gold',     state: 'agents' },
     { key: 'settings', icon: ICONS.settings, label: 'Настройки',  color: 'white',    state: 'settings' },
   ];
 
@@ -562,8 +562,11 @@ function renderSplash() {
   const splash = document.createElement('div');
   splash.id = 'splash-screen';
   splash.innerHTML = `
-    <img src="/logo.png" alt="R.O.B Logo" class="splash-logo">
-    <span class="splash-label">Command Center</span>
+    <div class="splash-images">
+      <img src="/dar.png" alt="Dar" class="splash-dar">
+      <img src="/rob.png" alt="Rob" class="splash-rob">
+    </div>
+    <div class="splash-text">ПОГОВОРИМ?</div>
   `;
   app.appendChild(splash);
 
