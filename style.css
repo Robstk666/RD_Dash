@@ -174,10 +174,14 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
 
 .splash-images {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  height: 80vh;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   pointer-events: none;
 }
 
@@ -185,7 +189,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   height: 70vh;
   max-width: 50%;
   object-fit: contain;
-  object-position: left top;
+  object-position: left bottom;
   transform: translateX(-100%);
   animation: slideInLeft 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
@@ -195,7 +199,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   height: 80vh;
   max-width: 50%;
   object-fit: contain;
-  object-position: right top;
+  object-position: right bottom;
   transform: translateX(100%);
   animation: slideInRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
@@ -1663,13 +1667,17 @@ body.section-filming .swipe-edge-indicator.right {
 /* Global Background Images Container */
 .global-bg-container {
   position: fixed;
-  inset: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  height: 80vh;
   pointer-events: none;
   z-index: -1;
   opacity: 0.25;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: flex-end;
   overflow: hidden;
 }
 
@@ -1680,10 +1688,10 @@ body.section-filming .swipe-edge-indicator.right {
 
 .global-bg-dar {
   height: 70vh;
-  object-position: left top;
+  object-position: left bottom;
 }
 
 .global-bg-rob {
   height: 80vh;
-  object-position: right top;
+  object-position: right bottom;
 }
