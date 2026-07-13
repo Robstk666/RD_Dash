@@ -458,13 +458,7 @@ function render() {
   renderBottomNav(); // always after innerHTML clear, before content
 
   // ✅ Global Background watermark logo — visible on all tabs
-  if (currentState !== 'splash') {
-    const bgLogo = document.createElement('img');
-    bgLogo.src = '/logo.png';
-    bgLogo.alt = '';
-    bgLogo.className = 'home-bg-logo';
-    document.body.appendChild(bgLogo);
-  }
+  // Removed background logo watermark as per request
 
   if (currentState === 'splash')                renderSplash();
   else if (currentState === 'workouts_menu')    renderWorkoutsMenu();
@@ -661,8 +655,8 @@ function renderWorkoutsMenu() {
   const hud = document.createElement('div');
   hud.className = 'section-hud';
   hud.innerHTML = `
-    <div class="hud-chip lime"><span class="hud-dot"></span> Модуль тренировок</div>
-    <h1 class="hud-title">Активные<br>программы</h1>
+    <div class="hud-chip lime"><span class="hud-dot"></span> Духовный модуль</div>
+    <h1 class="hud-title">ТЕМЫ<br>ОБСУЖДЕНИЯ</h1>
   `;
   content.appendChild(hud);
 
@@ -671,11 +665,7 @@ function renderWorkoutsMenu() {
   nav.style.padding = '0';
 
   const items = [
-    { icon: ICONS.theory,  label: 'База знаний', title: 'Теория и ЦНС', state: 'theory' },
-    { icon: ICONS.gym,     label: 'Зал',         title: 'Программа тренировок', state: 'training' },
-    { icon: ICONS.outdoor, label: 'Улица',       title: 'Тренировки без зала', state: 'outdoor_training' },
-    { icon: ICONS.pkt,     label: 'Восстановление', title: 'БАДы',          state: 'pkt' },
-    { icon: ICONS.derma,   label: 'Дерма',         title: 'Уход за лицом',    state: 'derma' },
+    { icon: ICONS.theory,  label: 'День не проебан', title: 'День не проебан', state: 'workouts_menu' }
   ];
 
   items.forEach(({ icon, label, title, state }) => {
@@ -822,8 +812,7 @@ function renderFilming() {
   const hud = document.createElement('div');
   hud.className = 'section-hud';
   hud.innerHTML = `
-    <div class="hud-chip cyan"><span class="hud-dot"></span> Live Feed Standby</div>
-    <h1 class="hud-title">Съёмочный<br>процесс</h1>
+    <div class="hud-chip cyan"><span class="hud-dot"></span> Модуль Насмотренности</div>
   `;
   content.appendChild(hud);
 
@@ -922,46 +911,11 @@ function renderAgents() {
   const hud = document.createElement('div');
   hud.className = 'section-hud';
   hud.innerHTML = `
-    <div class="hud-chip gold"><span class="hud-dot"></span> AI-модуль</div>
-    <h1 class="hud-title">Мои<br>агенты</h1>
+    <div class="hud-chip gold"><span class="hud-dot"></span> НА РЕМОНТЕ</div>
   `;
   content.appendChild(hud);
 
-  const list = document.createElement('div');
-  list.className = 'menu-nav';
-  list.style.padding = '0';
-
-  if (agentsData.length === 0) {
-    const empty = document.createElement('div');
-    empty.style.cssText = 'text-align:center;color:var(--text-dim);padding:48px 24px;font-size:14px;line-height:1.8;';
-    empty.innerHTML = '<div style="font-size:40px;margin-bottom:12px">🤖</div><div>Ссылки на агентов<br>будут добавлены скоро</div>';
-    list.appendChild(empty);
-  } else {
-    agentsData.forEach(({ name, desc, icon = ICONS.bot, url }) => {
-      const card = document.createElement('a');
-      card.className = 'menu-card gold';
-      card.href = url;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
-      card.style.textDecoration = 'none';
-      card.innerHTML = `
-        <div class="menu-card-icon" style="color:var(--gold); display:flex; align-items:center; justify-content:center;">${icon}</div>
-        <div class="menu-card-body">
-          <div class="menu-card-label">Агент</div>
-          <div class="menu-card-title">${name}</div>
-          ${desc ? `<div style="font-size:12px;color:var(--text-dim);margin-top:2px">${desc}</div>` : ''}
-        </div>
-        <span class="menu-card-arrow" style="color:var(--gold)">›</span>
-      `;
-      addRipple(card, 'ripple-gold');
-      card.addEventListener('touchstart', () => haptic(8), { passive: true });
-      list.appendChild(card);
-    });
-  }
-
-  content.appendChild(list);
   app.appendChild(content);
-  staggerCards('.menu-card');
 }
 
 // ─── SETTINGS SECTION ───────────────────────────
@@ -1071,74 +1025,12 @@ function renderOffer() {
   const hud = document.createElement('div');
   hud.className = 'section-hud';
   hud.innerHTML = `
-    <div class="hud-chip magenta"><span class="hud-dot"></span> Карьерный модуль</div>
-    <h1 class="hud-title">Активные<br>проекты</h1>
+    <div class="hud-chip magenta"><span class="hud-dot"></span> Географический модуль</div>
+    <h1 class="hud-title">ИНТЕРЕСНО<br>ЧТО ТАМ</h1>
   `;
   content.appendChild(hud);
 
   
-  // Head of AI section link
-  const aiBtn = document.createElement('div');
-  aiBtn.className = 'menu-card magenta';
-  aiBtn.innerHTML = `
-    <div class="menu-card-icon" style="color:var(--magenta)">${ICONS.brain}</div>
-    <div class="menu-card-body">
-      <div class="menu-card-label">Должность</div>
-      <div class="menu-card-title">Директор по внедрению ИИ</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Head of AI</div>
-    </div>
-    <span class="menu-card-arrow" style="color:var(--magenta)">›</span>
-  `;
-  addRipple(aiBtn, 'ripple-magenta');
-  aiBtn.onclick = () => { currentState = 'head_of_ai'; render(); };
-  content.appendChild(aiBtn);
-
-  // Money - Self Esteem section link
-  const moneyBtn = document.createElement('div');
-  moneyBtn.className = 'menu-card magenta';
-  moneyBtn.innerHTML = `
-    <div class="menu-card-icon" style="color:var(--magenta)">${ICONS.dollar}</div>
-    <div class="menu-card-body">
-      <div class="menu-card-label">Психология</div>
-      <div class="menu-card-title">ДЕНЬГИ -самооценка-</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:2px">Mindset & Value</div>
-    </div>
-    <span class="menu-card-arrow" style="color:var(--magenta)">›</span>
-  `;
-  addRipple(moneyBtn, 'ripple-magenta');
-  moneyBtn.onclick = () => { currentState = 'money_self_esteem'; render(); };
-  content.appendChild(moneyBtn);
-
-// Cover Letters
-  const lettersLabel = document.createElement('div');
-  lettersLabel.className = 'section-label';
-  lettersLabel.textContent = 'Сопроводительные письма';
-  content.appendChild(lettersLabel);
-
-  coverLettersData.forEach(letter => {
-    const btn = document.createElement('button');
-    btn.className = 'copy-btn';
-    btn.innerHTML = `
-      <div class="copy-btn-icon">${ICONS.copy}</div>
-      <span>${letter.title}</span>
-    `;
-    btn.onclick = () => {
-      navigator.clipboard.writeText(letter.content).then(() => {
-        const orig = btn.innerHTML;
-        btn.innerHTML = `<div class="copy-btn-icon" style="color:var(--lime);">${ICONS.check}</div><span>Скопировано!</span>`;
-        btn.style.borderColor = 'rgba(204,255,0,0.4)';
-        setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; }, 2000);
-      });
-    };
-    content.appendChild(btn);
-  });
-
-  // Tasks
-  const tasksLabel = document.createElement('div');
-  tasksLabel.className = 'section-label';
-  tasksLabel.textContent = 'Задания';
-  content.appendChild(tasksLabel);
-
   const deleted = getDeletedItems();
   const list = document.createElement('div');
   list.className = 'cards-list';

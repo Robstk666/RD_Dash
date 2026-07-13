@@ -177,15 +177,15 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   inset: 0;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   pointer-events: none;
 }
 
 .splash-dar {
-  height: 80vh;
+  height: 70vh;
   max-width: 50%;
   object-fit: contain;
-  object-position: left bottom;
+  object-position: left top;
   transform: translateX(-100%);
   animation: slideInLeft 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
@@ -195,7 +195,7 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   height: 80vh;
   max-width: 50%;
   object-fit: contain;
-  object-position: right bottom;
+  object-position: right top;
   transform: translateX(100%);
   animation: slideInRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
@@ -623,13 +623,16 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 8px 6px;
+  padding: 6px 4px;
   cursor: pointer;
   color: rgba(255, 255, 255, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.04);
   background: rgba(255, 255, 255, 0.02);
-  min-width: 64px;
+  min-width: 58px;
   flex: 1;
+  margin: 0 4px;
+  border-radius: var(--radius-sm);
+  transform: scale(0.95);
   -webkit-tap-highlight-color: transparent;
   border-radius: 20px;
   overflow: hidden;
@@ -1663,23 +1666,24 @@ body.section-filming .swipe-edge-indicator.right {
   inset: 0;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.15;
+  opacity: 0.25;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   overflow: hidden;
 }
 
 .global-bg-container img {
-  height: 80vh;
   max-width: 50%;
   object-fit: contain;
 }
 
 .global-bg-dar {
-  object-position: left bottom;
+  height: 70vh;
+  object-position: left top;
 }
 
 .global-bg-rob {
-  object-position: right bottom;
+  height: 80vh;
+  object-position: right top;
 }
