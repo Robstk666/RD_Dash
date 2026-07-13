@@ -165,45 +165,70 @@ body.section-offer::after    { background: radial-gradient(circle, var(--magenta
   inset: 0;
   background: var(--bg);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 9999;
-  gap: 28px;
   transition: opacity 0.8s ease-out;
   overflow: hidden;
 }
 
-#splash-screen::after {
-  content: '';
+.splash-images {
   position: absolute;
-  left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--lime), transparent);
-  animation: scanline 2.6s ease-out both;
-  opacity: 0;
+  inset: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
 }
 
-#splash-screen img.splash-logo {
-  width: 260px;
-  height: auto;
-  position: relative;
-  z-index: 1;
+.splash-dar {
+  height: 80vh;
+  max-width: 50%;
   object-fit: contain;
-  /* bg is now transparent — invert makes black → white, nothing else shows */
-  filter: invert(1) drop-shadow(0 0 32px rgba(204,255,0,0.5)) drop-shadow(0 0 80px rgba(204,255,0,0.25));
-  animation: splashGlow 2s infinite ease-in-out;
+  object-position: left bottom;
+  transform: translateX(-100%);
+  animation: slideInLeft 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
 }
 
-.splash-label {
-  font-family: var(--font);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
+.splash-rob {
+  height: 80vh;
+  max-width: 50%;
+  object-fit: contain;
+  object-position: right bottom;
+  transform: translateX(100%);
+  animation: slideInRight 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.15));
+}
+
+.splash-text {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   color: var(--lime);
+  text-shadow: 0 0 20px rgba(204,255,0,0.5);
+  z-index: 10;
   opacity: 0;
-  animation: fadeIn 1s ease 0.8s both;
+  animation: fadeInText 1s ease 1s forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+}
+
+@keyframes slideInLeft {
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeInText {
+  to { opacity: 1; }
 }
 
 /* ─── TOP HEADER BAR ─────────────────── */
@@ -1630,3 +1655,31 @@ body.section-filming .swipe-edge-indicator.right {
 .top-bar.gold .top-bar-title,
 .top-bar.gold .top-bar-back { color: var(--gold); }
 .top-bar.gold { border-bottom-color: rgba(245,200,66,0.15); }
+
+
+/* Global Background Images Container */
+.global-bg-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.15;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.global-bg-container img {
+  height: 80vh;
+  max-width: 50%;
+  object-fit: contain;
+}
+
+.global-bg-dar {
+  object-position: left bottom;
+}
+
+.global-bg-rob {
+  object-position: right bottom;
+}
